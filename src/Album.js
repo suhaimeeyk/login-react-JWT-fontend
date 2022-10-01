@@ -147,8 +147,8 @@ export default function Album() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
+                    <Button>View</Button>
+                    <Button>Edit</Button>
                   </CardActions>
                 </Card>
               </Grid>

@@ -21,17 +21,57 @@ export default function Users() {
         
 
       useEffect(() => {
-        fetch("http://localhost:3333/Users")
-          .then(res => res.json())
-          .then(
-            (result) => {
-              setItems(result);
-            //   console.log(result)
-            }
-          )
+        UserGet()
       }, [])
 
-      console.log(items.results)
+
+    const UserGet = () => {
+        fetch("http://localhost:3333/Users")
+        .then(res => res.json())
+        .then(
+          (result) => {
+            setItems(result);
+            // console.log(result)
+          }
+        )
+    }
+
+    // console.log(items.results)
+
+    const UserUpdate = users_id =>{
+        window.location = '/EditUser/' + users_id
+    }
+
+ 
+      const UserDelete = users_id => {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+            "users_id": users_id
+            });
+
+            var requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+            };
+
+            fetch("http://localhost:3333/Users_id", requestOptions)
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data)
+                if (data.status === 'Ok' ) {
+                    window.location ='/Album'
+                    alert('ลบรายการเรียบร้อย')
+                }else{
+                    console.log(data.status)
+                    alert('เกิดข้อผิดพลาด!!')
+                }
+            })
+            .catch(error => console.log('error', error));
+      }
       
 
   return (
@@ -75,8 +115,8 @@ export default function Users() {
                                     <TableCell align="center">{results.users_tel}</TableCell>
                                     <TableCell align="center">
                                         <ButtonGroup variant="outlined" aria-label="outlined button group">
-                                            <Button>Edit</Button>
-                                            <Button>Delete</Button>
+                                            <Button onClick={ () => UserUpdate(results.users_id) } >Edit</Button>
+                                            <Button onClick={ () => UserDelete(results.users_id) } >Delete</Button>
                                         </ButtonGroup>
                                     </TableCell>
                         
