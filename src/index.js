@@ -6,6 +6,7 @@ import { BrowserRouter,Routes,Route } from "react-router-dom";
 import Login from './Login'
 import Album from './Album'
 import Register from './Register'
+import CreateUsers from './CreateUsers'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -16,6 +17,7 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/album" element={<Album />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/CreateUsers" element={<CreateUsers />} />
     </Routes>
   </BrowserRouter>
 );

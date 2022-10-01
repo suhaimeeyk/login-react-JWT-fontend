@@ -39,7 +39,7 @@ export default function SignUp() {
         .then((data) => {
             console.log(data)
         if(data.status === 'Ok' ) {
-            window.location ='/login'
+            window.location ='/Album'
             alert('register success')
         }else{
             alert('register failed')
@@ -75,7 +75,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Create Users
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -138,7 +138,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/Login" variant="body2">
+                <Link href="/Album" variant="body2">
                   BACK
                 </Link>
               </Grid>

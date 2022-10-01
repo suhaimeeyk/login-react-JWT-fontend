@@ -21,13 +21,14 @@ import Logo from "./img/LOGO.png";
 const theme = createTheme();
 
 export default function SignInSide() {
+    
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
         const jsonData = {  
-                email: data.get('email'),
-                password: data.get('password'),
+                users_usersname: data.get('users_usersname'),
+                users_password: data.get('users_password'),
         }
 
     fetch('http://localhost:3333/login', {
@@ -102,9 +103,9 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
+                id="users_usersname"
                 label="Email Address"
-                name="email"
+                name="users_usersname"
                 autoComplete="email"
                 autoFocus
               />
@@ -112,10 +113,10 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                name="password"
+                name="users_password"
                 label="Password"
                 type="password"
-                id="password"
+                id="users_password"
                 autoComplete="current-password"
               />
               <FormControlLabel
