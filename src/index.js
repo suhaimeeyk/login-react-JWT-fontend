@@ -7,6 +7,7 @@ import Login from './Login'
 import Album from './Album'
 import Register from './Register'
 import CreateUsers from './CreateUsers'
+import EditUser from './EditUser'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -18,11 +19,10 @@ root.render(
         <Route path="/album" element={<Album />} />
         <Route path="/register" element={<Register />} />
         <Route path="/CreateUsers" element={<CreateUsers />} />
+        <Route path="/EditUser/:users_id" element={<EditUser />} />
     </Routes>
   </BrowserRouter>
 );
-
-
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
