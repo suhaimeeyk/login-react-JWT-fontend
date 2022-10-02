@@ -16,8 +16,6 @@ import Background from "./img/1.png";
 import Logo from "./img/LOGO.png";
 
 
-
-
 const theme = createTheme();
 
 export default function SignInSide() {
