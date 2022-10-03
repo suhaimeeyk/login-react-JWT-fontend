@@ -97,7 +97,7 @@ function DashboardContent() {
           redirect: 'follow'
         };
         
-        fetch("http://localhost:3000/EditUser/"+users_id, requestOptions)
+        fetch("http://localhost:3333/EditUser/"+users_id, requestOptions)
           .then(response => response.json())
           .then(result => {
               if (result['status'] === 'Ok') {
@@ -130,7 +130,7 @@ const handleSubmit = (event) => {
     }else{
 
   
-  fetch('http://localhost:3000/EditUser', {
+  fetch('http://localhost:3333/EditUser', {
       method: 'PUT', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',

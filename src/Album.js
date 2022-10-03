@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -9,10 +9,8 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-// import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-// import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import Container from '@mui/material/Container';
 import Users from './Users';
@@ -70,17 +68,55 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const mdTheme = createTheme();
 
+
+
 function DashboardContent() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  const handleLogout = (event) => {
-    event.preventDefault();
-    localStorage.removeItem('token');
-    window.location ='/login'
-  }
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    fetch('http://localhost:3333/authen', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+token
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+        if(data.status === 'ok' ) {
+
+            // alert('authen success')
+
+        }else{
+            alert('authen failed')
+            localStorage.removeItem('token');
+            window.location ='/login'
+
+
+        }
+
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+}, [])
+
+
+const handleLogout = (event) => {
+event.preventDefault();
+localStorage.removeItem('token');
+window.location ='/login'
+}
+
+
+
+
+
+
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -136,7 +172,6 @@ function DashboardContent() {
           <Toolbar
             sx={{
               display: 'flex',
-              alignItems: 'center',
               justifyContent: 'flex-end',
               px: [1],
             }}
@@ -166,7 +201,7 @@ function DashboardContent() {
         >
 
 {/* เพิ่มเติมตรงนี้ */}
-        <Container maxWidth="lg" sx={{ mt: 12, mb: 5 }}> 
+        <Container maxWidth="lg" sx={{ mt: 10, mb: 5 }}> 
              <Users/>
         </Container>
 

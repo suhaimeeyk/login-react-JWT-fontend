@@ -8,65 +8,74 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
-import AssignmentIcon from '@mui/icons-material/Assignment';
+// import AssignmentIcon from '@mui/icons-material/Assignment';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import AddCardIcon from '@mui/icons-material/AddCard';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 export const mainListItems = (
   <React.Fragment>
     <ListItemButton>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+        <ListItemIcon>
+                <DashboardIcon />
+        </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItemButton>
+    <ListItemButton>
+            <ListItemIcon>
+                    <ShoppingCartIcon />
+            </ListItemIcon>
+            <ListItemText primary="ข้อมูลการขายยางพารา" />
     </ListItemButton>
     <ListItemButton>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
+            <ListItemIcon>
+                <PeopleIcon />
+            </ListItemIcon>
+                <ListItemText primary="ค่าปุ๋ย" />
     </ListItemButton>
     <ListItemButton>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
+            <ListItemIcon>
+                <BarChartIcon />
+            </ListItemIcon>
+                <ListItemText primary="เบิกล่วงหน้า" />
     </ListItemButton>
     <ListItemButton>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
+            <ListItemIcon>
+                <LayersIcon />
+            </ListItemIcon>
+                 <ListItemText primary="ข้อมูลรายรับรายจ่าย" />
     </ListItemButton>
   </React.Fragment>
 );
 
 export const secondaryListItems = (
   <React.Fragment>
-    <ListSubheader component="div" inset>
-      Saved reports
+    <ListSubheader component="div" align="lift"  inset>
+    รายการส่วนตัว
     </ListSubheader>
     <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
+        <ListItemIcon>
+            <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="รายการลูกค้า" />
     </ListItemButton>
     <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
+        <ListItemIcon>
+            <ManageAccountsIcon />
+        </ListItemIcon>
+        <ListItemText primary="ประเภทลูกค้า" />
     </ListItemButton>
     <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
+        <ListItemIcon>
+            <AddCardIcon />
+        </ListItemIcon>
+        <ListItemText primary="ประเภทการเบิกเงิน" />
+    </ListItemButton>
+    <ListItemButton>
+        <ListItemIcon>
+            <MonetizationOnIcon />
+        </ListItemIcon>
+        <ListItemText primary="ราคาน้ำยางรายวัน" />
     </ListItemButton>
   </React.Fragment>
 );

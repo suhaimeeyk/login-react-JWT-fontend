@@ -41,7 +41,7 @@ export default function SignUp() {
         alert('เกิดข้อผิดพลาด!! กรุณาเช็คข้อมูลข้อมูล')
       }else{
 
-    fetch('http://localhost:3000/register', {
+    fetch('http://localhost:3333/register', {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',

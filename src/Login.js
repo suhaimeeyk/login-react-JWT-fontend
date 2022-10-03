@@ -14,6 +14,8 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Background from "./img/1.png";
 import Logo from "./img/LOGO.png";
+import Swal from 'sweetalert2'
+
 
 
 const theme = createTheme();
@@ -29,7 +31,7 @@ export default function SignInSide() {
                 users_password: data.get('users_password'),
         }
 
-    fetch('http://localhost:3000/login', {
+    fetch('http://localhost:3333/login', {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
@@ -39,11 +41,26 @@ export default function SignInSide() {
         .then((response) => response.json())
         .then((data) => {
         if(data.status === 'ok' ) {
-            localStorage.setItem('token', data.token)
-            window.location ='/album'
-            alert('success')
+        
+            Swal.fire({
+                title: 'Login Sccess..',
+                text: 'กำลังเดินการเข้าสู่ระบบ',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false
+                })
+
+                localStorage.setItem('token', data.token)
+                window.location ='/album'
+                // alert('success')
         }else{
-            alert('Login failed')
+            // alert('Login failed')
+            Swal.fire({
+                        title: 'Login Error!',
+                        text: 'รหัสผ่านไม่ถูกต้อง!! กรุณาตรวจสอบ',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                        })
         }
 
         })

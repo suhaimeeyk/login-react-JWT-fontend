@@ -8,7 +8,7 @@ import Album from './Album'
 import Register from './Register'
 import CreateUsers from './CreateUsers'
 import EditUser from './EditUser'
-import Test from './Test'
+import Navbar from './Navbar'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -21,7 +21,7 @@ root.render(
         <Route path="/register" element={<Register />} />
         <Route path="/CreateUsers" element={<CreateUsers />} />
         <Route path="/EditUser/:users_id" element={<EditUser />} />
-        <Route path="/Test" element={<Test />} />
+        <Route path="/Navbar" element={<Navbar />} />
     </Routes>
   </BrowserRouter>
 );
