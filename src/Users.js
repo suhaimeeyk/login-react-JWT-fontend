@@ -26,7 +26,7 @@ export default function Users() {
 
 
     const UserGet = () => {
-        fetch("http://localhost:3333/Users")
+        fetch("http://localhost:3000/Users")
         .then(res => res.json())
         .then(
           (result) => {
@@ -58,7 +58,7 @@ export default function Users() {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:3333/Users_id", requestOptions)
+            fetch("http://localhost:3000/Users_id", requestOptions)
             .then(response => response.json())
             .then((data) => {
                 console.log(data)
@@ -91,7 +91,7 @@ export default function Users() {
                         </Link>
                     </Box>
             </Box>
-                <TableContainer component={Paper}>
+        <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                     <TableRow>
@@ -104,21 +104,21 @@ export default function Users() {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {items.results?.map((results) => (
+                    {items.results?.map((results,index) => (
                         <TableRow
                             key={results.users_id} 
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                     <TableCell component="th" scope="row">
-                                        {results.users_id}
+                                        {index + 1 }
                                     </TableCell>
                                     <TableCell align="center">{results.users_name}</TableCell>
                                     <TableCell align="center">{results.users_tel}</TableCell>
                                     <TableCell align="center">{results.users_usersname}</TableCell>
                                     <TableCell align="center">
                                         <ButtonGroup variant="outlined" aria-label="outlined button group">
-                                            <Button onClick={ () => UserUpdate(results.users_id) } >Edit</Button>
-                                            <Button onClick={ () => UserDelete(results.users_id) } >Delete</Button>
+                                            <Button onClick={ () => UserUpdate(results.users_id) } > Edit </Button>
+                                            <Button onClick={ () => UserDelete(results.users_id) } > Delete </Button>
                                         </ButtonGroup>
                                     </TableCell>
                         

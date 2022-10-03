@@ -28,7 +28,7 @@ export default function SignUp() {
       users_tel : data.get('users_tel'),
     }
 
-    fetch('http://localhost:3333/register', {
+    fetch('http://localhost:3000/register', {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',

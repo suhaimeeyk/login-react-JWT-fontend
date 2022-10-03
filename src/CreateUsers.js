@@ -17,18 +17,31 @@ import Logo from "./img/LOGO.png";
 
 const theme = createTheme();
 
+
 export default function SignUp() {
+
   const handleSubmit = (event) => {
+
+
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
+
+    
+
     const  jsonData = {
       users_usersname: data.get('users_usersname'),
       users_password: data.get('users_password'),
       users_name : data.get('users_name'),
-      users_tel : data.get('users_tel'),
+      users_tel : data.get('users_tel')
     }
 
-    fetch('http://localhost:3333/register', {
+    
+    if ( (jsonData.users_usersname && jsonData.users_name && jsonData.users_password && jsonData.users_tel ) ==='') {
+        alert('เกิดข้อผิดพลาด!! กรุณาเช็คข้อมูลข้อมูล')
+      }else{
+
+    fetch('http://localhost:3000/register', {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
@@ -37,18 +50,22 @@ export default function SignUp() {
       })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
+
         if(data.status === 'Ok' ) {
             window.location ='/Album'
             alert('register success')
         }else{
             alert('register failed')
+
         }
 
+    
         })
         .catch((error) => {
           console.error('Error:', error);
         });
+    }
+
   };
 
   return (
