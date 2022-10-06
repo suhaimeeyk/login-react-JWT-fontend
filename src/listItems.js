@@ -8,10 +8,12 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
-// import AssignmentIcon from '@mui/icons-material/Assignment';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import Link from '@mui/material/Link';
+
 
 export const mainListItems = (
   <React.Fragment>
@@ -53,18 +55,31 @@ export const secondaryListItems = (
     <ListSubheader component="div" align="lift"  inset>
     รายการส่วนตัว
     </ListSubheader>
+
+    <Link href="/Album" underline="none">
+        <ListItemButton>
+            <ListItemIcon>
+                <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText primary="รายการสมาชิกผู้ซื้อ" />
+        </ListItemButton>
+    </Link>
     <ListItemButton>
         <ListItemIcon>
             <PeopleIcon />
         </ListItemIcon>
-        <ListItemText primary="รายการลูกค้า" />
+        <ListItemText primary="รายการสมาชิกลูกค้า" />
     </ListItemButton>
+
+    <Link href="/Alldb_catusers" underline="none">
     <ListItemButton>
         <ListItemIcon>
             <ManageAccountsIcon />
         </ListItemIcon>
         <ListItemText primary="ประเภทลูกค้า" />
     </ListItemButton>
+    </Link>
+
     <ListItemButton>
         <ListItemIcon>
             <AddCardIcon />

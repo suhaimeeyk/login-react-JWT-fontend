@@ -9,6 +9,9 @@ import Register from './Register'
 import CreateUsers from './CreateUsers'
 import EditUser from './EditUser'
 import Navbar from './Navbar'
+import Alldb_catusers from './Alldb_catusers'
+import EditUserdb_catusers from './EditUserdb_catusers'
+import Createdb_catusers from './Createdb_catusers'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -20,8 +23,11 @@ root.render(
         <Route path="/album" element={<Album />} />
         <Route path="/register" element={<Register />} />
         <Route path="/CreateUsers" element={<CreateUsers />} />
+        <Route path="/Createdb_catusers" element={<Createdb_catusers />} />
         <Route path="/EditUser/:users_id" element={<EditUser />} />
         <Route path="/Navbar" element={<Navbar />} />
+        <Route path="/Alldb_catusers" element={<Alldb_catusers />} />
+        <Route path="/EditUserdb_catusers/:catusers_id" element={<EditUserdb_catusers />} />
     </Routes>
   </BrowserRouter>
 );

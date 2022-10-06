@@ -13,7 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, secondaryListItems } from './listItems';
 import Container from '@mui/material/Container';
-import Users from './Users';
+import Userdb_catusers from './Userdb_catusers';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
@@ -205,7 +205,7 @@ window.location ='/login'
 
 {/* เพิ่มเติมตรงนี้ */}
         <Container maxWidth="lg" sx={{ mt: 10, mb: 5 }}> 
-             <Users/>
+             <Userdb_catusers/>
         </Container>
 
         </Box>
