@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState,useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -67,37 +67,39 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 
-
 function DashboardContent() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-
+  
+  const [users_name,setusers_name] = useState('');
   useEffect(() => {
     const token = localStorage.getItem('token')
     fetch('http://localhost:3333/authen', {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+token
+          'Authorization': 'Bearer '+ token
         },
       })
         .then((response) => response.json())
         .then((data) => {
-        if(data.status === 'ok' ) {
+            if(data.status === 'ok' ) {
 
-            // alert('authen success')
+                setusers_name(data.decoded['users_name'])
+                // console.log(data.decoded['users_name'])
 
-        }else{
-            alert('authen failed')
-            localStorage.removeItem('token');
-            window.location ='/login'
+            }else{
+                alert('authen failed')
+                localStorage.removeItem('token');
+                window.location ='/login'
+                // console.log('asdasdasd')
 
-
-        }
-
+                
+            }
+            
         })
 
         
@@ -160,7 +162,7 @@ window.location ='/login'
                 borderRadius: 35,
                 backgroundColor: "#d50000"
             }}
-             variant="contained"  onClick={handleLogout}>Logout</Button>
+             variant="contained"  onClick={handleLogout}> {users_name} | Logout</Button>
             </Stack>
 
               {/* <Badge badgeContent={4} color="secondary">

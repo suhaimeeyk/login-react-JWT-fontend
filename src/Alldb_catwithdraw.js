@@ -13,7 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, secondaryListItems } from './listItems';
 import Container from '@mui/material/Container';
-import Userdb_catusers from './Userdb_catusers';
+import Tabledb_catwithdraw from './Tabledb_catwithdraw';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
@@ -67,15 +67,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 
-
 function DashboardContent() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
+  
   const [users_name,setusers_name] = useState('');
-
   useEffect(() => {
     const token = localStorage.getItem('token')
     fetch('http://localhost:3333/authen', {
@@ -91,6 +90,7 @@ function DashboardContent() {
 
             setusers_name(data.decoded['users_name'])
             console.log(data.decoded['users_name'])
+
         }else{
             alert('authen failed')
             localStorage.removeItem('token');
@@ -108,6 +108,7 @@ function DashboardContent() {
 
 
 }, [])
+  
 
 
 const handleLogout = (event) => {
@@ -161,7 +162,8 @@ window.location ='/login'
                 borderRadius: 35,
                 backgroundColor: "#d50000"
             }}
-             variant="contained"  onClick={handleLogout}> {users_name} | Logout</Button>
+            variant="contained"  onClick={handleLogout}> {users_name} | Logout</Button>
+
             </Stack>
 
               {/* <Badge badgeContent={4} color="secondary">
@@ -206,7 +208,7 @@ window.location ='/login'
 
 {/* เพิ่มเติมตรงนี้ */}
         <Container maxWidth="lg" sx={{ mt: 10, mb: 5 }}> 
-             <Userdb_catusers/>
+             <Tabledb_catwithdraw/>
         </Container>
 
         </Box>

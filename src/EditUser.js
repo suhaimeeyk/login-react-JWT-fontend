@@ -258,6 +258,7 @@ const handleSubmit = (event) => {
 
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
@@ -270,6 +271,7 @@ const handleSubmit = (event) => {
                   value={users_name}
                 />
               </Grid>
+              
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
@@ -295,6 +297,7 @@ const handleSubmit = (event) => {
 
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -306,6 +309,7 @@ const handleSubmit = (event) => {
                   autoComplete="new-password"
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}

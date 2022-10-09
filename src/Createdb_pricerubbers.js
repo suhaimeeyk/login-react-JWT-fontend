@@ -30,15 +30,16 @@ export default function SignUp() {
     
 
     const  jsonData = {
-        catwithdraw_name: data.get('catwithdraw_name'),
+        percent: data.get('percent'),
+        price: data.get('price')
     }
 
     
-    if ( (jsonData.catwithdraw_name) ==='') {
+    if ( (jsonData.percent && jsonData.price) ==='') {
         alert('เกิดข้อผิดพลาด!! กรุณาเช็คข้อมูลข้อมูล')
       }else{
 
-    fetch('http://localhost:3333/Createdb_catwithdraw', {
+    fetch('http://localhost:3333/Createdb_pricerubbers', {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
@@ -49,8 +50,8 @@ export default function SignUp() {
         .then((data) => {
 
         if(data.status === 'Ok' ) {
-            window.location ='/Alldb_catwithdraw'
-            alert('สร้างประเภทการเบิกเงินเรียบร้อย')
+            window.location ='/Alldb_pricerubbers'
+            alert('สร้างรายการราคาน้ำยางเรียบร้อย')
         }else{
             alert('register failed')
 
@@ -89,20 +90,30 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            สร้างประเภทลูกค้า
+            สร้างรายการราคาน้ำยาง
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid>
+            <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} >
-                <TextField
-                  autoComplete="given-name"
-                  name="catwithdraw_name"
-                  required
-                  fullWidth
-                  id="catwithdraw_name"
-                  label="Name"
-                />
-              </Grid>
+                    <TextField
+                        autoComplete="given-name"
+                        name="percent"
+                        required
+                        fullWidth
+                        id="percent"
+                        label="เปอร์เซ็น"
+                        />
+                </Grid>
+                <Grid item xs={12} sm={6} >
+                    <TextField
+                        autoComplete="given-name"
+                        name="price"
+                        required
+                        fullWidth
+                        id="price"
+                        label="ราคา"
+                        />
+                </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -120,7 +131,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/Alldb_catusers" variant="body2">
+                <Link href="/Alldb_pricerubbers" variant="body2">
                   BACK
                 </Link>
               </Grid>

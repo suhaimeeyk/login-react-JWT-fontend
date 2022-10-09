@@ -13,6 +13,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Link from '@mui/material/Link';
+import Moment from 'moment';
+
+// import Moment from 'moment';
+
 
 
 export default function Users() {
@@ -21,34 +25,35 @@ export default function Users() {
         
 
       useEffect(() => {
-        UserGet()
-      }, [])
-
-
-    const UserGet = () => {
-        fetch("http://localhost:3333/Users")
+        
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+          };
+          
+        fetch("http://localhost:3333/db_pricerubbers" , requestOptions)
         .then(res => res.json())
         .then(
           (result) => {
             setItems(result);
-            // console.log(result)
+            console.log(result['results'])
           }
         )
-    }
 
-    // console.log(items.results)
+      }, [])
 
-    const UserUpdate = users_id =>{
-        window.location = '/EditUser/' + users_id
+
+    const UserUpdate = pricerubbers_id =>{
+        window.location = '/EditUserdb_pricerubbers/' + pricerubbers_id
     }
 
  
-      const UserDelete = users_id => {
+      const UserDelete = pricerubbers_id => {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
             var raw = JSON.stringify({
-            "users_id": users_id
+            "pricerubbers_id": pricerubbers_id
             });
 
             var requestOptions = {
@@ -58,12 +63,12 @@ export default function Users() {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:3333/Users_id", requestOptions)
+            fetch("http://localhost:3333/db_pricerubbers_id", requestOptions)
             .then(response => response.json())
             .then((data) => {
                 console.log(data)
                 if (data.status === 'Ok' ) {
-                    window.location ='/Album'
+                    window.location ='/Alldb_pricerubbers'
                     alert('ลบรายการเรียบร้อย')
                 }else{
                     console.log(data.status)
@@ -72,8 +77,11 @@ export default function Users() {
             })
             .catch(error => console.log('error', error));
       }
+
       
 
+      const formatDate = Moment().format('DD-MM-YYYY')
+      
   return (
     <React.Fragment>
       <CssBaseline />
@@ -82,11 +90,11 @@ export default function Users() {
             <Box display="flex">
                 <Box sx={{ flexGrow: 1 }}>
                 <Typography variant="h6" gutterBottom >
-                    รายการสมาชิกผู้ซื้อ
+                    ราคาน้ำยางแต่ละวัน
                 </Typography>
                 </Box>
                     <Box>
-                        <Link href="CreateUsers">
+                        <Link href="Createdb_pricerubbers">
                             <Button variant="contained">Create</Button>
                         </Link>
                     </Box>
@@ -96,9 +104,9 @@ export default function Users() {
                     <TableHead>
                     <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                         <TableCell align="center">ลำดับ</TableCell>
-                        <TableCell align="lift">ชื่อ</TableCell>
-                        <TableCell align="lift">เบอร์</TableCell>
-                        <TableCell align="lift">Email</TableCell>
+                        <TableCell align="lift">วันที่อัพเดทล่าสุด</TableCell>
+                        <TableCell align="lift">เปอร์เซ็น</TableCell>
+                        <TableCell align="lift">ราคา</TableCell>
                         <TableCell align="lift">Action</TableCell>
 
                     </TableRow>
@@ -106,19 +114,26 @@ export default function Users() {
                     <TableBody>
                     {items.results?.map((results,index) => (
                         <TableRow
-                            key={results.users_id} 
+                            key={results.pricerubbers_id} 
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                     <TableCell component="th" scope="row" align="center">
                                         {index + 1 }
                                     </TableCell>
-                                    <TableCell align="lift">{results.users_name}</TableCell>
-                                    <TableCell align="lift">{results.users_tel}</TableCell>
-                                    <TableCell align="lift">{results.users_usersname}</TableCell>
+                                    <TableCell align="lift" >
+                                        { (new Date(results.date_create)).toLocaleTimeString('th-TH', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric',
+                                            weekday: 'long',
+                                            }) }
+                                    </TableCell>
+                                    <TableCell align="lift">{ results.percent}</TableCell>
+                                    <TableCell align="lift">{results.price}</TableCell>
                                     <TableCell align="lift">
                                         <ButtonGroup variant="outlined" aria-label="outlined button group">
-                                            <Button onClick={ () => UserUpdate(results.users_id) } > Edit </Button>
-                                            <Button onClick={ () => UserDelete(results.users_id) } > Delete </Button>
+                                            <Button onClick={ () => UserUpdate(results.pricerubbers_id) } > Edit </Button>
+                                            <Button onClick={ () => UserDelete(results.pricerubbers_id) } > Delete </Button>
                                         </ButtonGroup>
                                     </TableCell>
                         

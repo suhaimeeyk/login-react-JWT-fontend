@@ -86,9 +86,9 @@ function DashboardContent() {
   };
 
   
-  const { catusers_id } = useParams();
+  const { catwithdraw_id } = useParams();
 
-  const [catusers_name,setCatusers_name] = useState('');
+  const [catwithdraw_name,setcatwithdraw_name] = useState('');
  
   useEffect( () => {
       var requestOptions = {
@@ -96,16 +96,18 @@ function DashboardContent() {
           redirect: 'follow'
         };
         
-        fetch("http://localhost:3333/EditUserdb_catusers/"+catusers_id, requestOptions)
+        fetch("http://localhost:3333/EditUserdb_catwithdraw/"+catwithdraw_id, requestOptions)
           .then(response => response.json())
           .then(result => {
               if (result['status'] === 'Ok') {
                   
-                setCatusers_name(result['data']['catusers_name'])
+                setcatwithdraw_name(result['data']['catwithdraw_name'])
+                console.log(result['data']['catwithdraw_name'])
+
               }
           })
           .catch(error => console.log('error', error));
-  }, [catusers_id])
+  }, [catwithdraw_id])
 
 
 const handleSubmit = (event) => {
@@ -114,16 +116,16 @@ const handleSubmit = (event) => {
   var data = new FormData(event.currentTarget);
   
   var  jsonData = {
-    catusers_id: catusers_id,
-    catusers_name: data.get('catusers_name'),
+    catwithdraw_id: catwithdraw_id,
+    catwithdraw_name: data.get('catwithdraw_name'),
   }
 
-  if ( (jsonData.users_usersname && jsonData.users_name && jsonData.users_password && jsonData.users_tel ) ==='') {
+  if ( (jsonData.catwithdraw_name  ) ==='') {
       alert('เกิดข้อผิดพลาด!! กรุณาเช็คข้อมูลข้อมูล')
     }else{
 
   
-  fetch('http://localhost:3333/EditUserdb_catusers', {
+  fetch('http://localhost:3333/EditUserdb_catwithdraw', {
       method: 'PUT', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -134,7 +136,7 @@ const handleSubmit = (event) => {
       .then((data) => {
           console.log(jsonData)
       if(data.status === 'Ok' ) {
-          window.location ='/Alldb_catusers'
+          window.location ='/Alldb_catwithdraw'
           alert('แก้ไขรายการเรียบร้อย')
       }else{
           alert('เกิดข้อผิดพลาด!! กรุณาเช็คข้อมูลข้อมูล')
@@ -246,7 +248,7 @@ const handleSubmit = (event) => {
             {/* <LockOutlinedIcon /> */}
           </Avatar>
           <Typography component="h1" variant="h5">
-            แก้ไขประเภทลูกค้า
+            แก้ไขประเภทการเบิกเงิน
           </Typography>
 
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
@@ -254,13 +256,13 @@ const handleSubmit = (event) => {
               <Grid item xs={12} sm={6} >
                 <TextField
                   autoComplete="given-name"
-                  name="catusers_name"
+                  name="catwithdraw_name"
                   required
                   fullWidth
-                  id="catusers_name"
+                  id="catwithdraw_name"
                   label="Name"
-                  onChange={ (e) => setCatusers_name(e.target.value)}
-                  value={catusers_name}
+                  onChange={ (e) => setcatwithdraw_name(e.target.value)}
+                  value={catwithdraw_name}
                 />
               </Grid>
               
@@ -275,8 +277,8 @@ const handleSubmit = (event) => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/Alldb_catusers" variant="body2">
-                  BACK 
+                <Link href="/Alldb_catwithdraw" variant="body2">
+                  BACK
                 </Link>
               </Grid>
             </Grid>

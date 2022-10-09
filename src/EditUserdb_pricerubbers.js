@@ -86,9 +86,10 @@ function DashboardContent() {
   };
 
   
-  const { catusers_id } = useParams();
+  const { pricerubbers_id } = useParams();
 
-  const [catusers_name,setCatusers_name] = useState('');
+  const [percent,setpercent] = useState('');
+  const [price,setprice] = useState('');
  
   useEffect( () => {
       var requestOptions = {
@@ -96,16 +97,17 @@ function DashboardContent() {
           redirect: 'follow'
         };
         
-        fetch("http://localhost:3333/EditUserdb_catusers/"+catusers_id, requestOptions)
+        fetch("http://localhost:3333/EditUserdb_pricerubbers/"+pricerubbers_id, requestOptions)
           .then(response => response.json())
           .then(result => {
               if (result['status'] === 'Ok') {
-                  
-                setCatusers_name(result['data']['catusers_name'])
+                
+                setpercent(result['data']['percent'])
+                setprice(result['data']['price'])
               }
           })
           .catch(error => console.log('error', error));
-  }, [catusers_id])
+  }, [pricerubbers_id])
 
 
 const handleSubmit = (event) => {
@@ -114,8 +116,9 @@ const handleSubmit = (event) => {
   var data = new FormData(event.currentTarget);
   
   var  jsonData = {
-    catusers_id: catusers_id,
-    catusers_name: data.get('catusers_name'),
+    pricerubbers_id: pricerubbers_id,
+    percent: data.get('percent'),
+    price: data.get('price'),
   }
 
   if ( (jsonData.users_usersname && jsonData.users_name && jsonData.users_password && jsonData.users_tel ) ==='') {
@@ -123,7 +126,7 @@ const handleSubmit = (event) => {
     }else{
 
   
-  fetch('http://localhost:3333/EditUserdb_catusers', {
+  fetch('http://localhost:3333/EditUserdb_pricerubbers', {
       method: 'PUT', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -134,7 +137,7 @@ const handleSubmit = (event) => {
       .then((data) => {
           console.log(jsonData)
       if(data.status === 'Ok' ) {
-          window.location ='/Alldb_catusers'
+          window.location ='/Alldb_pricerubbers'
           alert('แก้ไขรายการเรียบร้อย')
       }else{
           alert('เกิดข้อผิดพลาด!! กรุณาเช็คข้อมูลข้อมูล')
@@ -246,24 +249,37 @@ const handleSubmit = (event) => {
             {/* <LockOutlinedIcon /> */}
           </Avatar>
           <Typography component="h1" variant="h5">
-            แก้ไขประเภทลูกค้า
+            แก้ไขประเภทการเบิกเงิน
           </Typography>
 
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid >
-              <Grid item xs={12} sm={6} >
-                <TextField
-                  autoComplete="given-name"
-                  name="catusers_name"
-                  required
-                  fullWidth
-                  id="catusers_name"
-                  label="Name"
-                  onChange={ (e) => setCatusers_name(e.target.value)}
-                  value={catusers_name}
-                />
-              </Grid>
-              
+            <Grid container spacing={2}>
+
+                <Grid item xs={12} >
+                    <TextField
+                    autoComplete="given-name"
+                    name="percent"
+                    required
+                    fullWidth
+                    id="percent"
+                    label="เปอร์เซ็น"
+                    onChange={ (e) => setpercent(e.target.value)}
+                    value={percent}
+                    />
+                </Grid>
+
+                <Grid item xs={12} >
+                    <TextField
+                    autoComplete="given-name"
+                    name="price"
+                    required
+                    fullWidth
+                    id="price"
+                    label="ราคา"
+                    onChange={ (e) => setprice(e.target.value)}
+                    value={price}
+                    />
+                </Grid>
             </Grid>
             <Button
               type="submit"
@@ -275,7 +291,7 @@ const handleSubmit = (event) => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/Alldb_catusers" variant="body2">
+                <Link href="/Alldb_pricerubbers" variant="body2">
                   BACK 
                 </Link>
               </Grid>

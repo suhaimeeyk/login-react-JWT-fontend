@@ -26,7 +26,7 @@ export default function Users() {
 
 
     const UserGet = () => {
-        fetch("http://localhost:3333/Users")
+        fetch("http://localhost:3333/db_catwithdraw")
         .then(res => res.json())
         .then(
           (result) => {
@@ -38,17 +38,17 @@ export default function Users() {
 
     // console.log(items.results)
 
-    const UserUpdate = users_id =>{
-        window.location = '/EditUser/' + users_id
+    const UserUpdate = catwithdraw_id =>{
+        window.location = '/Editdb_catwithdraw/' + catwithdraw_id
     }
 
  
-      const UserDelete = users_id => {
+      const UserDelete = catwithdraw_id => {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
             var raw = JSON.stringify({
-            "users_id": users_id
+            "catwithdraw_id": catwithdraw_id
             });
 
             var requestOptions = {
@@ -58,12 +58,12 @@ export default function Users() {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:3333/Users_id", requestOptions)
+            fetch("http://localhost:3333/db_catwithdraw_id", requestOptions)
             .then(response => response.json())
             .then((data) => {
                 console.log(data)
                 if (data.status === 'Ok' ) {
-                    window.location ='/Album'
+                    window.location ='/Alldb_catwithdraw'
                     alert('ลบรายการเรียบร้อย')
                 }else{
                     console.log(data.status)
@@ -82,11 +82,11 @@ export default function Users() {
             <Box display="flex">
                 <Box sx={{ flexGrow: 1 }}>
                 <Typography variant="h6" gutterBottom >
-                    รายการสมาชิกผู้ซื้อ
+                    ประเภทการเบิกเงิน
                 </Typography>
                 </Box>
                     <Box>
-                        <Link href="CreateUsers">
+                        <Link href="Createdb_catwithdraw">
                             <Button variant="contained">Create</Button>
                         </Link>
                     </Box>
@@ -96,9 +96,7 @@ export default function Users() {
                     <TableHead>
                     <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                         <TableCell align="center">ลำดับ</TableCell>
-                        <TableCell align="lift">ชื่อ</TableCell>
-                        <TableCell align="lift">เบอร์</TableCell>
-                        <TableCell align="lift">Email</TableCell>
+                        <TableCell align="lift">ชื่อประเภทสมาชิก</TableCell>
                         <TableCell align="lift">Action</TableCell>
 
                     </TableRow>
@@ -106,19 +104,17 @@ export default function Users() {
                     <TableBody>
                     {items.results?.map((results,index) => (
                         <TableRow
-                            key={results.users_id} 
+                            key={results.catwithdraw_id} 
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                     <TableCell component="th" scope="row" align="center">
                                         {index + 1 }
                                     </TableCell>
-                                    <TableCell align="lift">{results.users_name}</TableCell>
-                                    <TableCell align="lift">{results.users_tel}</TableCell>
-                                    <TableCell align="lift">{results.users_usersname}</TableCell>
+                                    <TableCell align="lift">{results.catwithdraw_name}</TableCell>
                                     <TableCell align="lift">
                                         <ButtonGroup variant="outlined" aria-label="outlined button group">
-                                            <Button onClick={ () => UserUpdate(results.users_id) } > Edit </Button>
-                                            <Button onClick={ () => UserDelete(results.users_id) } > Delete </Button>
+                                            <Button onClick={ () => UserUpdate(results.catwithdraw_id) } > Edit </Button>
+                                            <Button onClick={ () => UserDelete(results.catwithdraw_id) } > Delete </Button>
                                         </ButtonGroup>
                                     </TableCell>
                         

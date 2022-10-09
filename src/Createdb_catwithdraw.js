@@ -50,9 +50,9 @@ export default function SignUp() {
 
         if(data.status === 'Ok' ) {
             window.location ='/Alldb_catwithdraw'
-            alert('สร้างประเภทการเบิกเงินเรียบร้อย')
+            alert('สร้างประเภทลูกค้าเรียบร้อย')
         }else{
-            alert('register failed')
+            alert('failed')
 
         }
 
@@ -89,7 +89,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            สร้างประเภทลูกค้า
+            สร้างประเภทการเบิกเงิน
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid>
@@ -120,7 +120,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/Alldb_catusers" variant="body2">
+                <Link href="/Alldb_catwithdraw" variant="body2">
                   BACK
                 </Link>
               </Grid>

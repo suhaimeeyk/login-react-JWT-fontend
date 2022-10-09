@@ -64,6 +64,7 @@ export const secondaryListItems = (
             <ListItemText primary="รายการสมาชิกผู้ซื้อ" />
         </ListItemButton>
     </Link>
+
     <ListItemButton>
         <ListItemIcon>
             <PeopleIcon />
@@ -72,25 +73,33 @@ export const secondaryListItems = (
     </ListItemButton>
 
     <Link href="/Alldb_catusers" underline="none">
-    <ListItemButton>
-        <ListItemIcon>
-            <ManageAccountsIcon />
-        </ListItemIcon>
-        <ListItemText primary="ประเภทลูกค้า" />
-    </ListItemButton>
+        <ListItemButton>
+            <ListItemIcon>
+                <ManageAccountsIcon />
+            </ListItemIcon>
+            <ListItemText primary="ประเภทลูกค้า" />
+        </ListItemButton>
     </Link>
 
-    <ListItemButton>
-        <ListItemIcon>
-            <AddCardIcon />
-        </ListItemIcon>
-        <ListItemText primary="ประเภทการเบิกเงิน" />
-    </ListItemButton>
-    <ListItemButton>
-        <ListItemIcon>
-            <MonetizationOnIcon />
-        </ListItemIcon>
-        <ListItemText primary="ราคาน้ำยางรายวัน" />
-    </ListItemButton>
-  </React.Fragment>
+    <Link href="/Alldb_catwithdraw" underline="none">
+        <ListItemButton>
+            <ListItemIcon>
+                <AddCardIcon />
+            </ListItemIcon>
+            <ListItemText primary="ประเภทการเบิกเงิน" />
+        </ListItemButton>
+    </Link>
+
+    <Link href="/Alldb_pricerubbers" underline="none">
+        <ListItemButton>
+            <ListItemIcon>
+                <MonetizationOnIcon />
+            </ListItemIcon>
+            <ListItemText primary="รายการราคาน้ำยาง" />
+        </ListItemButton>
+    </Link>
+
+
+
+  </React.Fragment> 
 );
