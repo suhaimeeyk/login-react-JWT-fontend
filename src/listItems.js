@@ -65,12 +65,15 @@ export const secondaryListItems = (
         </ListItemButton>
     </Link>
 
-    <ListItemButton>
-        <ListItemIcon>
-            <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="รายการสมาชิกลูกค้า" />
-    </ListItemButton>
+    <Link href="/Alldb_customer" underline="none">
+        <ListItemButton>
+            <ListItemIcon>
+                <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary="รายการสมาชิกลูกค้า" />
+        </ListItemButton>
+    </Link>
+
 
     <Link href="/Alldb_catusers" underline="none">
         <ListItemButton>

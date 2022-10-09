@@ -18,6 +18,8 @@ import Editdb_catwithdraw from './Editdb_catwithdraw'
 import Alldb_pricerubbers from './Alldb_pricerubbers'
 import EditUserdb_pricerubbers from './EditUserdb_pricerubbers'
 import Createdb_pricerubbers from './Createdb_pricerubbers'
+import Alldb_customer from './Alldb_customer'
+import Createdb_customer from './Createdb_customer'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -40,6 +42,8 @@ root.render(
         <Route path="/Createdb_catwithdraw" element={<Createdb_catwithdraw />} />
         <Route path="/Alldb_pricerubbers" element={<Alldb_pricerubbers />} />
         <Route path="/Createdb_pricerubbers" element={<Createdb_pricerubbers />} />
+        <Route path="/Alldb_customer" element={<Alldb_customer />} />
+        <Route path="/Createdb_customer" element={<Createdb_customer />} />
     </Routes>
   </BrowserRouter>
 );

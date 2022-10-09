@@ -105,6 +105,7 @@ function DashboardContent() {
                   setUsers_name(result['data']['users_name'])
                   setUsers_tel(result['data']['users_tel'])
                   setUsers_usersname(result['data']['users_usersname'])
+                  console.log(result['data'])
 
               }
           })
