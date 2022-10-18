@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState,useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,11 +14,39 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Logo from "./img/LOGO.png";
 
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 
 const theme = createTheme();
 
 
 export default function SignUp() {
+
+
+    const [items, setItems] = useState([]);
+        
+
+      useEffect(() => {
+        UserGet()
+      }, [])
+
+
+    const UserGet = () => {
+        fetch("http://localhost:3333/db_level")
+        .then(res => res.json())
+        .then(
+          (result) => {
+            setItems(result);
+            // console.log(result)
+          }
+        )
+    }
+
+
+
 
   const handleSubmit = (event) => {
 
@@ -26,18 +54,18 @@ export default function SignUp() {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
-
     
 
     const  jsonData = {
       users_usersname: data.get('users_usersname'),
       users_password: data.get('users_password'),
       users_name : data.get('users_name'),
-      users_tel : data.get('users_tel')
+      users_tel : data.get('users_tel'),
+      level : data.get('level'),
     }
 
     
-    if ( (jsonData.users_usersname && jsonData.users_name && jsonData.users_password && jsonData.users_tel ) ==='') {
+    if ( (jsonData.users_usersname && jsonData.users_name && jsonData.users_password && jsonData.users_tel && jsonData.level ) ==='') {
         alert('เกิดข้อผิดพลาด!! กรุณาเช็คข้อมูลข้อมูล')
       }else{
 
@@ -53,9 +81,9 @@ export default function SignUp() {
 
         if(data.status === 'Ok' ) {
             window.location ='/Album'
-            alert('register success')
+            alert('สร้างบัญชีเรียบร้อย')
         }else{
-            alert('register failed')
+            alert('เกิดข้อผิดพลาด failed!')
 
         }
 
@@ -94,7 +122,8 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Create Users
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleSubmit} >
+
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -127,6 +156,7 @@ export default function SignUp() {
                   autoComplete="email"
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -138,6 +168,25 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
+
+              <Grid item xs={12}>
+                        <FormControl fullWidth>
+                            <InputLabel  name="level" id="level">ประเภทลูกค้า</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-label"
+                            id="level"
+                            label="สถานะ"
+                            name="level"
+                            >
+                        {items.results?.map((results,index) => (
+
+                                <MenuItem value={results.id}>{results.name}</MenuItem>
+                         ))}
+
+                            </Select>
+                        </FormControl>
+                </Grid>
+
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}

@@ -15,72 +15,112 @@ import TableRow from '@mui/material/TableRow';
 import Link from '@mui/material/Link';
 
 
+
+
+
 export default function Users() {
 
-    const [items, setItems] = useState([]);
+//   const { users_id } = useParams(users_id);
+  const [users_id,setusers_id] = useState('');
+
+  useEffect(() => {
+
+    const token = localStorage.getItem('token')
+    fetch('http://localhost:3333/authen', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+ token
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data.status === 'ok' ) {
+
+                setusers_id(data.decoded['users_id'])
+                // console.log(data.decoded['users_name'])
+
+            }else{
+                alert('authen failed')
+                localStorage.removeItem('token');
+                window.location ='/login'
+                // console.log('asdasdasd')
+
+                
+            }
+            
+        })
+
+        
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+
+
+}, [])
+
+const [items, setItems] = useState([]);
         
 
+
       useEffect(() => {
-        UserGet()
-      }, [])
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+          };
 
 
-    const UserGet = () => {
-        fetch("http://localhost:3333/db_customer")
+        fetch("http://localhost:3333/db_customer_user/"+users_id , requestOptions)
         .then(res => res.json())
-        .then(
-          (result) => {
+        .then((result) => {
             setItems(result);
-            // console.log(result)
+            console.log(result)
           }
         )
-    }
-
-    // console.log(items.results)
-
-    const UserUpdate = customer_id =>{
-        window.location = '/EditUserdb_customer/' + customer_id
-    }
+      }, [users_id])
 
  
-      const UserDelete = customer_id => {
+      const UserUpdate = customer_id =>{
+        window.location = 'EditUserdb_customer/' + customer_id
+    }
 
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
+    const UserDelete = customer_id => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
 
-            var raw = JSON.stringify({
-            "customer_id": customer_id
-            }) ;
+        var raw = JSON.stringify({
+        "customer_id": customer_id
+        });
 
-            var requestOptions = {
-            method: 'DELETE',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-            };
+        var requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
 
-            fetch("http://localhost:3333/db_customer_id", requestOptions)
-            .then(response => response.json())
-            .then((data) => {
-                console.log(data)
-                if (data.status === 'Ok' ) {
-                    window.location ='/Alldb_customer'
-                    alert('ลบรายการเรียบร้อย')
-                }else{
-                    console.log(data.status)
-                    alert('เกิดข้อผิดพลาด!!')
-                }
-            })
-            .catch(error => console.log('error', error));
-      }
-      
+        fetch("http://localhost:3333/db_customer_id", requestOptions)
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data)
+            if (data.status === 'Ok' ) {
+                window.location ='/user/Alldb_customer'
+                alert('ลบรายการเรียบร้อย')
+            }else{
+                console.log(data.status)
+                alert('เกิดข้อผิดพลาด!!')
+            }
+        })
+        .catch(error => console.log('error', error));
+  }
+
 
   return (
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg" sx={{ p : 5 }}>
         <Paper sx={ { p:2 }}>
-            <Box display="flex">
+            <Box align="center" display="flex">
                 <Box sx={{ flexGrow: 1 }}>
                 <Typography variant="h6" gutterBottom >
                     รายการสมาชิกลูกค้า
@@ -105,25 +145,25 @@ export default function Users() {
 
                     </TableRow>
                     </TableHead>
+                    
                     <TableBody>
-                    { items.results?.map((results,index) => (
+                    { items.data?.map((data,index) => (
                         <TableRow
-                            key={results.customer_id} 
+                            key={data.customer_id} 
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                     <TableCell component="th" scope="row" align="center">
                                         {index + 1 }
                                     </TableCell>
-                                    <TableCell align="lift">{results.customer_name}</TableCell>
-                                    <TableCell align="lift">{results.customer_tel}</TableCell>
-                                    <TableCell align="lift">{results.catusers_name}</TableCell>
-                                    <TableCell align="lift">{results.users_name}</TableCell>
-
+                                    <TableCell align="lift">{data.customer_name}</TableCell>
+                                    <TableCell align="lift">{data.customer_tel}</TableCell>
+                                    <TableCell align="lift">{data.catusers_name}</TableCell>
+                                    <TableCell align="lift">{data.users_name}</TableCell>
 
                                     <TableCell align="lift">
                                         <ButtonGroup variant="outlined" aria-label="outlined button group">
-                                            <Button onClick={ () => UserUpdate(results.customer_id) } > Edit </Button>
-                                            <Button onClick={ () => UserDelete(results.customer_id) } > Delete </Button>
+                                            <Button onClick={ () => UserUpdate(data.customer_id) } > Edit </Button>
+                                            <Button onClick={ () => UserDelete(data.customer_id) } > Delete </Button>
                                         </ButtonGroup>
                                     </TableCell>
                                     
@@ -131,11 +171,6 @@ export default function Users() {
                         </TableRow>
                     ))}
 
-                    {/* <ul>
-          {items.map(results => (
-            <li key={results.users_id}>{results.users_name}</li>
-          ))}
-        </ul> */}
                     </TableBody>
                 </Table>
         </TableContainer>

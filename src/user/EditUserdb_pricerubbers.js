@@ -20,18 +20,12 @@ import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
-import Logo from "./img/LOGO.png";
+import Logo from "../img/LOGO.png";
 import { useParams } from 'react-router-dom';
-
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-
 
 
 
@@ -92,32 +86,28 @@ function DashboardContent() {
   };
 
   
-  const { users_id } = useParams();
+  const { pricerubbers_id } = useParams();
 
-  const [users_name,setUsers_name] = useState('');
-  const [users_tel,setUsers_tel] = useState('');
-  const [users_usersname,setUsers_usersname] = useState('');
-
+  const [percent,setpercent] = useState('');
+  const [price,setprice] = useState('');
+ 
   useEffect( () => {
       var requestOptions = {
           method: 'GET',
           redirect: 'follow'
         };
         
-        fetch("http://localhost:3333/EditUser/"+users_id, requestOptions)
+        fetch("http://localhost:3333/EditUserdb_pricerubbers/"+pricerubbers_id, requestOptions)
           .then(response => response.json())
           .then(result => {
               if (result['status'] === 'Ok') {
-                  
-                  setUsers_name(result['data']['users_name'])
-                  setUsers_tel(result['data']['users_tel'])
-                  setUsers_usersname(result['data']['users_usersname'])
-                  console.log(result['data'])
-
+                
+                setpercent(result['data']['percent'])
+                setprice(result['data']['price'])
               }
           })
           .catch(error => console.log('error', error));
-  }, [users_id])
+  }, [pricerubbers_id])
 
 
 const handleSubmit = (event) => {
@@ -126,21 +116,17 @@ const handleSubmit = (event) => {
   var data = new FormData(event.currentTarget);
   
   var  jsonData = {
-    users_id: users_id,
-    users_usersname: data.get('users_usersname'),
-    users_password: data.get('users_password'),
-    users_name : data.get('users_name'),
-    users_tel : data.get('users_tel'),
-    level : data.get('level'),
+    pricerubbers_id: pricerubbers_id,
+    percent: data.get('percent'),
+    price: data.get('price'),
   }
-//   console.log(jsonData)
 
-  if ( (jsonData.users_usersname && jsonData.users_name && jsonData.users_password && jsonData.users_tel && jsonData.level ) ==='') {
+  if ( (jsonData.users_usersname && jsonData.users_name && jsonData.users_password && jsonData.users_tel ) ==='') {
       alert('เกิดข้อผิดพลาด!! กรุณาเช็คข้อมูลข้อมูล')
     }else{
 
   
-  fetch('http://localhost:3333/EditUser', {
+  fetch('http://localhost:3333/EditUserdb_pricerubbers', {
       method: 'PUT', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -149,17 +135,15 @@ const handleSubmit = (event) => {
     })
       .then((response) => response.json())
       .then((data) => {
+          console.log(jsonData)
       if(data.status === 'Ok' ) {
-          window.location ='/Album'
-          alert('register success')
-//   console.log(data)
-
+          window.location ='/user/Alldb_pricerubbers'
+          alert('แก้ไขรายการเรียบร้อย')
       }else{
-          alert('register failed')
+          alert('เกิดข้อผิดพลาด!! กรุณาเช็คข้อมูลข้อมูล')
       }
 
       })
-      
       .catch((error) => {
         console.error('Error:', error);
       });
@@ -265,84 +249,37 @@ const handleSubmit = (event) => {
             {/* <LockOutlinedIcon /> */}
           </Avatar>
           <Typography component="h1" variant="h5">
-            Edit Users
+            แก้ไขประเภทการเบิกเงิน
           </Typography>
 
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
 
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="users_name"
-                  required
-                  fullWidth
-                  id="users_name"
-                  label="Name"
-                  onChange={ (e) => setUsers_name(e.target.value)}
-                  value={users_name}
-                />
-              </Grid>
-              
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="users_tel"
-                  label="Tell"
-                  name="users_tel"
-                  autoComplete="family-name"
-                  onChange={ (e) => setUsers_tel(e.target.value)}
-                  value={users_tel}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="users_usersname"
-                  label="Email Address"
-                  name="users_usersname"
-                  autoComplete="email"
-                  onChange={ (e) => setUsers_usersname(e.target.value)}
-                  value={users_usersname}
-
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="users_password"
-                  label="กรุณาใส่รหัสผ่านใหม่"
-                  type="password"
-                  id="users_password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-
-              <Grid item xs={12} >
-                        <FormControl fullWidth>
-                                <InputLabel name="level" id="level">สถานะ</InputLabel>
-                                <Select
-                                labelId="demo-simple-select-label"
-                                id="level"
-                                label="ผุู้ดูแล"
-                                name="level"
-                                >
-                                    <MenuItem value="1">ผู้ดูแล</MenuItem>
-                                    <MenuItem value="2">ผู้ใช้</MenuItem>
-                                </Select>
-                        </FormControl>
+                <Grid item xs={12} >
+                    <TextField
+                    autoComplete="given-name"
+                    name="percent"
+                    required
+                    fullWidth
+                    id="percent"
+                    label="เปอร์เซ็น"
+                    onChange={ (e) => setpercent(e.target.value)}
+                    value={percent}
+                    />
                 </Grid>
 
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="ยอมรับการสร้างบัญชี."
-                />
-              </Grid>
+                <Grid item xs={12} >
+                    <TextField
+                    autoComplete="given-name"
+                    name="price"
+                    required
+                    fullWidth
+                    id="price"
+                    label="ราคา"
+                    onChange={ (e) => setprice(e.target.value)}
+                    value={price}
+                    />
+                </Grid>
             </Grid>
             <Button
               type="submit"
@@ -354,7 +291,7 @@ const handleSubmit = (event) => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/Album" variant="body2">
+                <Link href="/user/Alldb_pricerubbers" variant="body2">
                   BACK 
                 </Link>
               </Grid>

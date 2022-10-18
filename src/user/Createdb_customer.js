@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Logo from "./img/LOGO.png";
+import Logo from "../img/LOGO.png";
 
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -24,6 +24,44 @@ const theme = createTheme();
 
 
 export default function SignUp() {
+
+    const [users_id,setusers_id] = useState('');
+
+  useEffect(() => {
+
+    const token = localStorage.getItem('token')
+    fetch('http://localhost:3333/authen', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+ token
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data.status === 'ok' ) {
+
+                setusers_id(data.decoded['users_id'])
+                // console.log(data.decoded['users_id'])
+
+            }else{
+                alert('authen failed')
+                localStorage.removeItem('token');
+                window.location ='/login'
+                // console.log('asdasdasd')
+
+                
+            }
+            
+        })
+
+        
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+
+
+}, [])
 
     const [items, setItems] = useState([]);
         
@@ -47,21 +85,21 @@ export default function SignUp() {
     const [Users, setUsers] = useState([]);
         
 
-      useEffect(() => {
-        UserGetUsers()
-      }, [])
+    useEffect(() => {
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+          };
 
 
-    const UserGetUsers = () => {
-        fetch("http://localhost:3333/Users")
+        fetch("http://localhost:3333/UsersTo/"+users_id , requestOptions)
         .then(res => res.json())
-        .then(
-          (result) => {
+        .then((result) => {
             setUsers(result);
-            // console.log(result)
+            console.log(result)
           }
         )
-    }
+      }, [users_id])
 
 
 
@@ -101,7 +139,7 @@ export default function SignUp() {
         .then((response) => response.json())
         .then((data) => {
         if(data.status === 'Ok' ) {
-            window.location ='/Alldb_customer'
+            window.location ='/user/Alldb_customer'
             alert('สร้างรายการราคาน้ำยางเรียบร้อย')
         }else{
             alert('register failed')
@@ -141,7 +179,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            สร้างรายการราคาน้ำยาง
+          รายการสมาชิกลูกค้า
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -194,9 +232,9 @@ export default function SignUp() {
                                 name="db_users_id"
 
                                 >
-                            {Users.results?.map((results,index) => (
+                            {Users.data?.map((data,index) => (
 
-                                    <MenuItem value={results.users_id}>{results.users_name}</MenuItem>
+                                    <MenuItem value={data.users_id}>{data.users_name}</MenuItem>
                             ))}
 
                                 </Select>
@@ -220,7 +258,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/Alldb_customer" variant="body2">
+                <Link href="/user/Alldb_customer" variant="body2">
                   BACK
                 </Link>
               </Grid>

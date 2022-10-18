@@ -16,10 +16,19 @@ import Alldb_catwithdraw from './Alldb_catwithdraw'
 import Createdb_catwithdraw from './Createdb_catwithdraw'
 import Editdb_catwithdraw from './Editdb_catwithdraw'
 import Alldb_pricerubbers from './Alldb_pricerubbers'
+import UserAlldb_pricerubbers from './user/Alldb_pricerubbers'
 import EditUserdb_pricerubbers from './EditUserdb_pricerubbers'
+import UserEditUserdb_pricerubbers from './user/EditUserdb_pricerubbers'
 import Createdb_pricerubbers from './Createdb_pricerubbers'
+import UserCreatedb_pricerubbers from './user/Createdb_pricerubbers'
 import Alldb_customer from './Alldb_customer'
 import Createdb_customer from './Createdb_customer'
+import UserCreatedb_customer from './user/Createdb_customer'
+import Userindex from './user/Userindex'
+import UserAlldb_customer from './user/Alldb_customer'
+import EditUserdb_customer from './EditUserdb_customer'
+import UserEditUserdb_customer from './user/EditUserdb_customer'
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -38,12 +47,22 @@ root.render(
         <Route path="/EditUserdb_catusers/:catusers_id" element={<EditUserdb_catusers />} />
         <Route path="/Editdb_catwithdraw/:catwithdraw_id" element={<Editdb_catwithdraw />} />
         <Route path="/EditUserdb_pricerubbers/:pricerubbers_id" element={<EditUserdb_pricerubbers />} />
+        <Route path="/user/EditUserdb_pricerubbers/:pricerubbers_id" element={<UserEditUserdb_pricerubbers />} />
         <Route path="/Alldb_catwithdraw" element={<Alldb_catwithdraw />} />
         <Route path="/Createdb_catwithdraw" element={<Createdb_catwithdraw />} />
         <Route path="/Alldb_pricerubbers" element={<Alldb_pricerubbers />} />
+        <Route path="/user/Alldb_pricerubbers" element={<UserAlldb_pricerubbers />} />
         <Route path="/Createdb_pricerubbers" element={<Createdb_pricerubbers />} />
+        <Route path="/user/Createdb_pricerubbers" element={<UserCreatedb_pricerubbers />} />
         <Route path="/Alldb_customer" element={<Alldb_customer />} />
         <Route path="/Createdb_customer" element={<Createdb_customer />} />
+        <Route path="/user/Createdb_customer" element={<UserCreatedb_customer />} />
+        <Route path="/user/Userindex" element={<Userindex />} />
+        <Route path="/user/Alldb_customer" element={<UserAlldb_customer />} />
+        <Route path="/EditUserdb_customer/:customer_id" element={<EditUserdb_customer />} />
+        <Route path="/user/EditUserdb_customer/:customer_id" element={<UserEditUserdb_customer />} />
+
+ 
     </Routes>
   </BrowserRouter>
 );

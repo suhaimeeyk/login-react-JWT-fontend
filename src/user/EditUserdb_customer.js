@@ -20,18 +20,19 @@ import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
-import Logo from "./img/LOGO.png";
+import Logo from "../img/LOGO.png";
 import { useParams } from 'react-router-dom';
+
 
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-
+import Select from '@mui/material/Select';
+import Stack from '@mui/material/Stack';
 
 
 
@@ -83,41 +84,87 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const mdTheme = createTheme();
 
+const handleLogout = (event) => {
+    event.preventDefault();
+    localStorage.removeItem('token');
+    window.location ='/login'
+    }
+
 
 
 function DashboardContent() {
+
+
+    const [users_name,setusers_name] = useState('');
+  
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    fetch('http://localhost:3333/authen', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+ token
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data.status === 'ok' ) {
+
+                setusers_name(data.decoded['users_name'])
+       
+
+
+            }else{
+                alert('authen failed')
+                localStorage.removeItem('token');
+                window.location ='../login'
+                // console.log('asdasdasd')
+
+                
+            }
+            
+        })
+
+        
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+
+
+}, [])
+
+
+
+
+
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
   
-  const { users_id } = useParams();
+  const { customer_id } = useParams();
 
-  const [users_name,setUsers_name] = useState('');
-  const [users_tel,setUsers_tel] = useState('');
-  const [users_usersname,setUsers_usersname] = useState('');
-
+  const [customer_name,setcustomer_name] = useState('');
+  const [customer_tel,setcustomer_tel] = useState('');
+ 
   useEffect( () => {
       var requestOptions = {
           method: 'GET',
           redirect: 'follow'
         };
         
-        fetch("http://localhost:3333/EditUser/"+users_id, requestOptions)
+        fetch("http://localhost:3333/EditUserdb_customer/"+customer_id, requestOptions)
           .then(response => response.json())
           .then(result => {
               if (result['status'] === 'Ok') {
                   
-                  setUsers_name(result['data']['users_name'])
-                  setUsers_tel(result['data']['users_tel'])
-                  setUsers_usersname(result['data']['users_usersname'])
-                  console.log(result['data'])
-
+                setcustomer_name(result['data']['customer_name'])
+                setcustomer_tel(result['data']['customer_tel'])
               }
           })
           .catch(error => console.log('error', error));
-  }, [users_id])
+  }, [customer_id])
 
 
 const handleSubmit = (event) => {
@@ -126,21 +173,19 @@ const handleSubmit = (event) => {
   var data = new FormData(event.currentTarget);
   
   var  jsonData = {
-    users_id: users_id,
-    users_usersname: data.get('users_usersname'),
-    users_password: data.get('users_password'),
-    users_name : data.get('users_name'),
-    users_tel : data.get('users_tel'),
-    level : data.get('level'),
+    customer_id: customer_id,
+    customer_name: data.get('customer_name'),
+    customer_tel: data.get('customer_tel'),
+    catcustomer_id: data.get('catcustomer_id'),
+    db_users_id: data.get('db_users_id'),
   }
-//   console.log(jsonData)
 
-  if ( (jsonData.users_usersname && jsonData.users_name && jsonData.users_password && jsonData.users_tel && jsonData.level ) ==='') {
+  if ( (jsonData.customer_name && jsonData.customer_tel && jsonData.catcustomer_id && jsonData.customer_id ) ==='') {
       alert('เกิดข้อผิดพลาด!! กรุณาเช็คข้อมูลข้อมูล')
     }else{
 
   
-  fetch('http://localhost:3333/EditUser', {
+  fetch('http://localhost:3333/EditUserdb_customer', {
       method: 'PUT', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -149,29 +194,66 @@ const handleSubmit = (event) => {
     })
       .then((response) => response.json())
       .then((data) => {
+          console.log(jsonData)
       if(data.status === 'Ok' ) {
-          window.location ='/Album'
-          alert('register success')
-//   console.log(data)
-
+          window.location ='/user/Alldb_customer'
+          alert('แก้ไขรายการเรียบร้อย')
       }else{
-          alert('register failed')
+          alert('เกิดข้อผิดพลาด!! กรุณาเช็คข้อมูลข้อมูล')
       }
 
       })
-      
       .catch((error) => {
         console.error('Error:', error);
       });
 
   }
 };
+
+const [items, setItems] = useState([]);
+        
+
+      useEffect(() => {
+        UserGet()
+      }, [])
+
+
+    const UserGet = () => {
+        fetch("http://localhost:3333/db_catusers")
+        .then(res => res.json())
+        .then(
+          (result) => {
+            setItems(result);
+            // console.log(result)
+          }
+        )
+    }
+
+    const [Users, setUsers] = useState([]);
+        
+
+      useEffect(() => {
+        UserGetUsers()
+      }, [])
+
+
+    const UserGetUsers = () => {
+        fetch("http://localhost:3333/Users")
+        .then(res => res.json())
+        .then(
+          (result) => {
+            setUsers(result);
+            // console.log(result)
+          }
+        )
+    }
   
 
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
+
         <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
@@ -197,12 +279,23 @@ const handleSubmit = (event) => {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              Latex Purchasing Platfrom
             </Typography>
             <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
+                
+            <Stack direction="row" spacing={2}>
+             <Button 
+               style={{
+                borderRadius: 35,
+                backgroundColor: "#d50000"
+            }}
+             variant="contained"  onClick={handleLogout}> {users_name} | Logout</Button>
+            </Stack>
+
+              {/* <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
-              </Badge>
+              </Badge> */}
+              
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -265,84 +358,80 @@ const handleSubmit = (event) => {
             {/* <LockOutlinedIcon /> */}
           </Avatar>
           <Typography component="h1" variant="h5">
-            Edit Users
+            แก้ไขรายการสมาชิกลูกค้า
           </Typography>
 
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
 
-              <Grid item xs={12} sm={6}>
+          <Grid container spacing={2}>
+            
+              <Grid item xs={12} sm={6} >
                 <TextField
                   autoComplete="given-name"
-                  name="users_name"
+                  name="customer_name"
                   required
                   fullWidth
-                  id="users_name"
+                  id="customer_name"
                   label="Name"
-                  onChange={ (e) => setUsers_name(e.target.value)}
-                  value={users_name}
+                  onChange={ (e) => setcustomer_name(e.target.value)}
+                  value={customer_name}
                 />
               </Grid>
-              
-              <Grid item xs={12} sm={6}>
+          
+
+           
+              <Grid item xs={12} sm={6} >
                 <TextField
+                  autoComplete="given-name"
+                  name="customer_tel"
                   required
                   fullWidth
-                  id="users_tel"
-                  label="Tell"
-                  name="users_tel"
-                  autoComplete="family-name"
-                  onChange={ (e) => setUsers_tel(e.target.value)}
-                  value={users_tel}
+                  id="customer_tel"
+                  label="เบอร์โทร"
+                  onChange={ (e) => setcustomer_tel(e.target.value)}
+                  value={customer_tel}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="users_usersname"
-                  label="Email Address"
-                  name="users_usersname"
-                  autoComplete="email"
-                  onChange={ (e) => setUsers_usersname(e.target.value)}
-                  value={users_usersname}
+            
 
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="users_password"
-                  label="กรุณาใส่รหัสผ่านใหม่"
-                  type="password"
-                  id="users_password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-
-              <Grid item xs={12} >
+            <Grid item xs={12} sm={6} >
                         <FormControl fullWidth>
-                                <InputLabel name="level" id="level">สถานะ</InputLabel>
+                            <InputLabel  name="catcustomer_id" id="catcustomer_id">ประเภทลูกค้า</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-label"
+                            id="catcustomer_id"
+                            label="ประเภทลูกค้า"
+                            name="catcustomer_id"
+                            >
+                        {items.results?.map((results,index) => (
+
+                                <MenuItem value={results.catusers_id}>{results.catusers_name}</MenuItem>
+                         ))}
+
+                            </Select>
+                        </FormControl>
+                </Grid>
+                
+                
+                <Grid item xs={12} sm={6} >
+                        <FormControl fullWidth>
+                                <InputLabel name="db_users_id" id="db_users_id">ผุู้ดูแล</InputLabel>
                                 <Select
                                 labelId="demo-simple-select-label"
-                                id="level"
+                                id="db_users_id"
                                 label="ผุู้ดูแล"
-                                name="level"
+                                name="db_users_id"
+
                                 >
-                                    <MenuItem value="1">ผู้ดูแล</MenuItem>
-                                    <MenuItem value="2">ผู้ใช้</MenuItem>
+                            {Users.results?.map((results,index) => (
+
+                                    <MenuItem value={results.users_id}>{results.users_name}</MenuItem>
+                            ))}
+
                                 </Select>
                         </FormControl>
                 </Grid>
 
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="ยอมรับการสร้างบัญชี."
-                />
-              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -354,7 +443,7 @@ const handleSubmit = (event) => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/Album" variant="body2">
+                <Link href="/user/Alldb_customer" variant="body2">
                   BACK 
                 </Link>
               </Grid>

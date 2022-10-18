@@ -13,7 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, secondaryListItems } from './listItems';
 import Container from '@mui/material/Container';
-import Users from './Users';
+import Tabledb_pricerubbers from './Tabledb_pricerubbers';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
@@ -75,33 +75,30 @@ function DashboardContent() {
 
   
   const [users_name,setusers_name] = useState('');
-
   useEffect(() => {
-    
     const token = localStorage.getItem('token')
     fetch('http://localhost:3333/authen', {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+ token
+          'Authorization': 'Bearer '+token
         },
       })
         .then((response) => response.json())
         .then((data) => {
-            if(data.status === 'ok' ) {
+        if(data.status === 'ok' ) {
 
-                setusers_name(data.decoded['users_name'])
-                // console.log(data.decoded['users_name'])
+            setusers_name(data.decoded['users_name'])
+            console.log(data.decoded['users_name'])
 
-            }else{
-                alert('authen failed')
-                localStorage.removeItem('token');
-                window.location ='/login'
-                // console.log('asdasdasd')
+        }else{
+            alert('authen failed')
+            localStorage.removeItem('token');
+            window.location ='/login'
 
-                
-            }
-            
+
+        }
+
         })
 
         
@@ -111,6 +108,7 @@ function DashboardContent() {
 
 
 }, [])
+  
 
 
 const handleLogout = (event) => {
@@ -164,7 +162,8 @@ window.location ='/login'
                 borderRadius: 35,
                 backgroundColor: "#d50000"
             }}
-             variant="contained"  onClick={handleLogout}> {users_name} | Logout</Button>
+            variant="contained"  onClick={handleLogout}> {users_name} | Logout</Button>
+
             </Stack>
 
               {/* <Badge badgeContent={4} color="secondary">
@@ -209,7 +208,7 @@ window.location ='/login'
 
 {/* เพิ่มเติมตรงนี้ */}
         <Container maxWidth="lg" sx={{ mt: 10, mb: 5 }}> 
-             <Users/>
+             <Tabledb_pricerubbers/>
         </Container>
 
         </Box>

@@ -40,10 +40,10 @@ export default function SignInSide() {
       })
         .then((response) => response.json())
         .then((data) => {
-        if(data.status === 'ok' ) {
+        if(data.level === '1' ) {
         
             Swal.fire({
-                title: 'Login Sccess..',
+                title: 'Login Admin Sccess..',
                 text: 'กำลังเดินการเข้าสู่ระบบ',
                 icon: 'success',
                 timer: 1500,
@@ -53,6 +53,19 @@ export default function SignInSide() {
                 localStorage.setItem('token', data.token)
                 window.location ='/album'
                 // alert('success')
+        }else if(data.level === '2'){
+            // alert('Login failed')
+            Swal.fire({
+                title: 'Login Sccess..',
+                text: 'กำลังเดินการเข้าสู่ระบบ',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false
+                })
+
+                localStorage.setItem('token', data.token)
+                window.location ='/user/Userindex'
+
         }else{
             // alert('Login failed')
             Swal.fire({

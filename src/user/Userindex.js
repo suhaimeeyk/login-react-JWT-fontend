@@ -11,11 +11,14 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems, secondaryListItems } from './listItems';
 import Container from '@mui/material/Container';
 import Users from './Users';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+
+import { mainListItems, secondaryListItems } from './listItems';
+
+
 
 
 const drawerWidth = 240;
@@ -75,9 +78,8 @@ function DashboardContent() {
 
   
   const [users_name,setusers_name] = useState('');
-
+  
   useEffect(() => {
-    
     const token = localStorage.getItem('token')
     fetch('http://localhost:3333/authen', {
         method: 'POST', // or 'PUT'
@@ -96,7 +98,7 @@ function DashboardContent() {
             }else{
                 alert('authen failed')
                 localStorage.removeItem('token');
-                window.location ='/login'
+                window.location ='../login'
                 // console.log('asdasdasd')
 
                 

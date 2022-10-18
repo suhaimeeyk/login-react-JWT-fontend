@@ -31,7 +31,7 @@ export default function Users() {
         .then(
           (result) => {
             setItems(result);
-            // console.log(result)
+            console.log(result)
           }
         )
     }
@@ -79,17 +79,17 @@ export default function Users() {
       <CssBaseline />
       <Container maxWidth="lg" sx={{ p : 5 }}>
         <Paper sx={ { p:2 }}>
-            <Box display="flex">
+            <Box align="center" display="flex">
                 <Box sx={{ flexGrow: 1 }}>
                 <Typography variant="h6" gutterBottom >
-                    รายการสมาชิกผู้ซื้อ
+                    รายการผู้ซื้อ
                 </Typography>
                 </Box>
-                    <Box>
+                    {/* <Box>
                         <Link href="CreateUsers">
                             <Button variant="contained">Create</Button>
                         </Link>
-                    </Box>
+                    </Box> */}
             </Box>
         <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -100,7 +100,7 @@ export default function Users() {
                         <TableCell align="lift">เบอร์</TableCell>
                         <TableCell align="lift">Email</TableCell>
                         <TableCell align="lift">สถานะ</TableCell>
-                        <TableCell align="lift">Action</TableCell>
+                        {/* <TableCell align="lift">Action</TableCell> */}
 
                     </TableRow>
                     </TableHead>
@@ -117,12 +117,12 @@ export default function Users() {
                                     <TableCell align="lift">{results.users_tel}</TableCell>
                                     <TableCell align="lift">{results.users_usersname}</TableCell>
                                     <TableCell align="lift">{results.name}</TableCell>
-                                    <TableCell align="lift">
+                                    {/* <TableCell align="lift">
                                         <ButtonGroup variant="outlined" aria-label="outlined button group">
                                             <Button onClick={ () => UserUpdate(results.users_id) } > Edit </Button>
                                             <Button onClick={ () => UserDelete(results.users_id) } > Delete </Button>
                                         </ButtonGroup>
-                                    </TableCell>
+                                    </TableCell> */}
                         
                         </TableRow>
                     ))}

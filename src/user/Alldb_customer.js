@@ -13,7 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, secondaryListItems } from './listItems';
 import Container from '@mui/material/Container';
-import Users from './Users';
+import Userdb_customer from './Userdb_customer';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
@@ -67,17 +67,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 
+
 function DashboardContent() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  
   const [users_name,setusers_name] = useState('');
-
+  
   useEffect(() => {
-    
     const token = localStorage.getItem('token')
     fetch('http://localhost:3333/authen', {
         method: 'POST', // or 'PUT'
@@ -96,7 +95,7 @@ function DashboardContent() {
             }else{
                 alert('authen failed')
                 localStorage.removeItem('token');
-                window.location ='/login'
+                window.location ='../login'
                 // console.log('asdasdasd')
 
                 
@@ -209,7 +208,7 @@ window.location ='/login'
 
 {/* เพิ่มเติมตรงนี้ */}
         <Container maxWidth="lg" sx={{ mt: 10, mb: 5 }}> 
-             <Users/>
+             <Userdb_customer/>
         </Container>
 
         </Box>
