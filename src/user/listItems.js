@@ -18,36 +18,44 @@ import Link from '@mui/material/Link';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton>
-        <ListItemIcon>
-                <DashboardIcon />
-        </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItemButton>
+
     <ListItemButton>
             <ListItemIcon>
-                    <ShoppingCartIcon />
+                    <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="ข้อมูลการขายยางพารา" />
+                <ListItemText primary="Dashboard" />
     </ListItemButton>
+
+    <Link href="/user/datadisplay" underline="none">
+        <ListItemButton>
+                <ListItemIcon>
+                        <ShoppingCartIcon />
+                </ListItemIcon>
+                <ListItemText primary="ข้อมูลการขายยางพารา" />
+        </ListItemButton>
+    </Link>
+
     <ListItemButton>
             <ListItemIcon>
                 <PeopleIcon />
             </ListItemIcon>
                 <ListItemText primary="ค่าปุ๋ย" />
     </ListItemButton>
+
     <ListItemButton>
             <ListItemIcon>
                 <BarChartIcon />
             </ListItemIcon>
                 <ListItemText primary="เบิกล่วงหน้า" />
     </ListItemButton>
+
     <ListItemButton>
             <ListItemIcon>
                 <LayersIcon />
             </ListItemIcon>
                  <ListItemText primary="ข้อมูลรายรับรายจ่าย" />
     </ListItemButton>
+
   </React.Fragment>
 );
 

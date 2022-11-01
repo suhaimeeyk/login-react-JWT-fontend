@@ -28,6 +28,9 @@ import Userindex from './user/Userindex'
 import UserAlldb_customer from './user/Alldb_customer'
 import EditUserdb_customer from './EditUserdb_customer'
 import UserEditUserdb_customer from './user/EditUserdb_customer'
+import UserDatadisplay from './user/datadisplay'
+import Datadisplay from './datadisplay'
+import Createdatadisplay from './Createdatadisplay'
 
 
 
@@ -61,6 +64,9 @@ root.render(
         <Route path="/user/Alldb_customer" element={<UserAlldb_customer />} />
         <Route path="/EditUserdb_customer/:customer_id" element={<EditUserdb_customer />} />
         <Route path="/user/EditUserdb_customer/:customer_id" element={<UserEditUserdb_customer />} />
+        <Route path="/user/datadisplay" element={<UserDatadisplay />} />
+        <Route path="/datadisplay" element={<Datadisplay />} />
+        <Route path="/Createdatadisplay" element={<Createdatadisplay />} />
 
  
     </Routes>
