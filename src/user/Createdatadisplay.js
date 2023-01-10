@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Logo from "./img/LOGO.png";
+import Logo from "../img/LOGO.png";
 
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -84,27 +84,64 @@ const theme = createTheme();
 
 export default function SignUp() {
 
+    const [users_id,setusers_id] = useState('');
+
+    useEffect(() => {
   
+      const token = localStorage.getItem('token')
+      fetch('http://localhost:3333/authen', {
+          method: 'POST', // or 'PUT'
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+              if(data.status === 'ok' ) {
+  
+                  setusers_id(data.decoded['users_id'])
+                  // console.log(data.decoded['users_name'])
+  
+              }else{
+                  alert('authen failed')
+                  localStorage.removeItem('token');
+                  window.location ='/login'
+                  // console.log('asdasdasd')
+  
+                  
+              }
+              
+          })
+  
+          
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+  
+  
+  }, [])
 
 
     const [items, setItems] = useState([]);
         
 
+
       useEffect(() => {
-        UserGet()
-      }, [])
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+          };
 
 
-    const UserGet = () => {
-        fetch("http://localhost:3333/db_customer")
+        fetch("http://localhost:3333/db_customer_user/"+users_id , requestOptions)
         .then(res => res.json())
-        .then(
-          (result) => {
+        .then((result) => {
             setItems(result);
-            // console.log(result)
+            console.log(result.data)
           }
         )
-    }
+      }, [users_id])
     // const [selectedOption,setSelectedOption] = useState(0);
     
     const [Users, setUsers] = useState([]);
@@ -184,7 +221,7 @@ export default function SignUp() {
         .then((response) => response.json())
         .then((data) => {
         if(data.status === 'Ok' ) {
-            window.location ='/datadisplay'
+            window.location ='/user/datadisplay'
             alert('สร้างรายการขายน้ำยางเรียบร้อย')
             console.log(data)
         }else{
@@ -242,9 +279,9 @@ export default function SignUp() {
                                 label="ชื่อลูกค้า"
                                 name="data_usersid"
                                 >
-                            {items.results?.map((results,index) => (
+                            {items.data?.map((data,index) => (
 
-                                    <MenuItem value={results.customer_id}>{results.customer_name}</MenuItem>
+                                    <MenuItem value={data.customer_id}>{data.customer_name}</MenuItem>
                             ))}
 
                                 </Select>
@@ -395,12 +432,12 @@ export default function SignUp() {
                   </Grid>
                 
 
-                {/* <Grid item xs={12}>
+                <Grid item xs={12}>
                     <FormControlLabel
                     control={<Checkbox value="allowExtraEmails" color="primary" />}
                     label="เพิ่มข้อมูล."
                     />
-                </Grid> */}
+                </Grid>
             </Grid>
             <Button
               type="submit"
@@ -412,7 +449,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/datadisplay" variant="body2">
+                <Link href="/user/datadisplay" variant="body2">
                   BACK
                 </Link>
               </Grid>

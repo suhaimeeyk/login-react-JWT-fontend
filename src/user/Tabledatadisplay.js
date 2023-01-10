@@ -129,7 +129,7 @@ export default function Users() {
                 </Typography>
                 </Box>
                     <Box>
-                        <Link href="Createdb_pricerubbers">
+                        <Link href="Createdatadisplay">
                             <Button variant="contained">Create</Button>
                         </Link>
                     </Box>
@@ -146,7 +146,7 @@ export default function Users() {
                             <TableCell align="lift">น้ำหนักรวมทั้งหมด</TableCell>
                             <TableCell align="lift">น้ำหนักแกลลอน</TableCell>
                             <TableCell align="lift">น้ำหนักหักลบแกลลอน</TableCell>
-                            <TableCell align="lift">เปอร์เซ็น</TableCell>
+                            {/* <TableCell align="lift">เปอร์เซ็น</TableCell> */}
                             <TableCell align="lift">น้ำยาแห้ง</TableCell>
                             <TableCell align="lift">ราคา</TableCell>
                             <TableCell align="lift">จำนวนเงินทั้งหมด</TableCell>
@@ -183,7 +183,7 @@ export default function Users() {
                                     <TableCell align="lift">{results.data_totalgallon}</TableCell>
                                     <TableCell align="lift">{results.data_wgallon}</TableCell>
                                     <TableCell align="lift">{results.data_disgallon}</TableCell>
-                                    <TableCell align="lift">{results.data_percent}</TableCell>
+                                    {/* <TableCell align="lift">{results.data_percent}</TableCell> */}
                                     <TableCell align="lift">{results.data_dryrubber}</TableCell>
                                     <TableCell align="lift">{results.data_price}</TableCell>
                                     <TableCell align="lift">{results.data_pricetotal}</TableCell>
