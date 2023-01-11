@@ -38,17 +38,17 @@ export default function Users() {
       }, [])
 
 
-    const UserUpdate = pricerubbers_id =>{
-        window.location = '/user/EditUserdb_pricerubbers/' + pricerubbers_id
+    const UserUpdate = data_id =>{
+        window.location = '/Editdb_data/' + data_id
     }
 
  
-      const UserDelete = pricerubbers_id => {
+      const UserDelete = data_id => {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
             var raw = JSON.stringify({
-            "pricerubbers_id": pricerubbers_id
+            "data_id": data_id
             });
 
             var requestOptions = {
@@ -58,7 +58,7 @@ export default function Users() {
             redirect: 'follow'
             };
 
-            fetch("http://localhost:3333/db_pricerubbers_id", requestOptions)
+            fetch("http://localhost:3333/db_data_id", requestOptions)
             .then(response => response.json())
             .then((data) => {
                 console.log(data)
@@ -167,8 +167,8 @@ export default function Users() {
                                 
                                     <TableCell align="lift">
                                         <ButtonGroup variant="outlined" aria-label="outlined button group">
-                                            <Button onClick={ () => UserUpdate(results.pricerubbers_id) } > Edit </Button>
-                                            <Button onClick={ () => UserDelete(results.pricerubbers_id) } > Delete </Button>
+                                            <Button onClick={ () => UserUpdate(results.data_id) } > Edit </Button>
+                                            <Button onClick={ () => UserDelete(results.data_id) } > Delete </Button>
                                         </ButtonGroup>
                                     </TableCell>
                         

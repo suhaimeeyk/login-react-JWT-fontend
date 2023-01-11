@@ -32,6 +32,7 @@ import UserDatadisplay from './user/datadisplay'
 import Datadisplay from './datadisplay'
 import Createdatadisplay from './Createdatadisplay'
 import UserCreatedatadisplay from './user/Createdatadisplay'
+import Editdb_data from './Editdb_data'
 
 
 
@@ -69,6 +70,7 @@ root.render(
         <Route path="/datadisplay" element={<Datadisplay />} />
         <Route path="/Createdatadisplay" element={<Createdatadisplay />} />
         <Route path="/user/Createdatadisplay" element={<UserCreatedatadisplay />} />
+        <Route path="/Editdb_data/:data_id" element={<Editdb_data />} />
 
  
     </Routes>
