@@ -524,7 +524,6 @@ function DashboardContent() {
                                                     InputProps={{
                                                         shrink: true,
                                                     }}
-                                                    color="warning"
                                                     focused
                                                 />
                                             </Grid>
@@ -595,8 +594,6 @@ function DashboardContent() {
                                                     focused
                                                     fullWidth
                                                     onChange={fncSum3} aria-describedby="emailHelp" placeholder="เปอร์เซ็น * น้ำยาแห้ง"
-
-                                                    focused
                                                 />
                                             </Grid>
 
