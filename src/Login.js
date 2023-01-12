@@ -68,6 +68,8 @@ export default function SignInSide() {
 
         }else{
             // alert('Login failed')
+            // console.log(data)
+
             Swal.fire({
                         title: 'Login Error!',
                         text: 'รหัสผ่านไม่ถูกต้อง!! กรุณาตรวจสอบ',
