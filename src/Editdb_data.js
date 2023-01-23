@@ -186,18 +186,23 @@ function DashboardContent() {
 
         var jsonData = {
             data_id: data_id,
-            customer_name: data.get('customer_name'),
-            customer_tel: data.get('customer_tel'),
-            catdata_id: data.get('catdata_id'),
-            db_users_id: data.get('db_users_id'),
+            data_usersid: data.get('data_usersid'),
+            cat_id: data.get('cat_id'),
+            inputpercent: data.get('inputpercent'),
+            data_totalgallon: data.get('data_totalgallon'),
+            data_wgallon: data.get('data_wgallon'),
+            data_disgallon: data.get('data_disgallon'),
+            data_dryrubber: data.get('data_dryrubber'),
+            data_price: data.get('data_price'),
+            data_pricetotal: data.get('data_pricetotal'),
         }
 
-        if ((jsonData.customer_name && jsonData.customer_tel && jsonData.catdata_id && jsonData.data_id) === '') {
+        if ((jsonData.data_usersid && jsonData.cat_id && jsonData.inputpercent && jsonData.data_totalgallon && jsonData.data_wgallon && jsonData.data_disgallon && jsonData.data_dryrubber && jsonData.data_price && jsonData.data_pricetotal) === '') {
             alert('เกิดข้อผิดพลาด!! กรุณาเช็คข้อมูลข้อมูล')
         } else {
 
 
-            fetch('http://localhost:3333/Editdb_data', {
+            fetch('http://localhost:3333/EditUserdb_data', {
                 method: 'PUT', // or 'PUT'
                 headers: {
                     'Content-Type': 'application/json',
@@ -208,7 +213,7 @@ function DashboardContent() {
                 .then((data) => {
                     console.log(jsonData)
                     if (data.status === 'Ok') {
-                        window.location = '/Alldb_customer'
+                        window.location = '/datadisplay'
                         alert('แก้ไขรายการเรียบร้อย')
                     } else {
                         alert('เกิดข้อผิดพลาด!! กรุณาเช็คข้อมูลข้อมูล')
@@ -218,7 +223,7 @@ function DashboardContent() {
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-
+                console.log(jsonData)
         }
     };
 
@@ -236,6 +241,25 @@ function DashboardContent() {
             .then(
                 (result) => {
                     setItems(result);
+                    // console.log(result)
+                }
+            )
+    }
+
+    const [db_customer, setdb_customer] = useState([]);
+
+
+    useEffect(() => {
+        Userdb_customerGet()
+    }, [])
+
+
+    const Userdb_customerGet = () => {
+        fetch("http://localhost:3333/db_customer")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setdb_customer(result);
                     // console.log(result)
                 }
             )
@@ -383,13 +407,10 @@ function DashboardContent() {
 
                                         <Grid container spacing={2}>
 
-                                            <Grid item xs={12}>
+                                            <Grid item xs={12} sm={6} >
 
                                                 <TextField
-                                                    id="customer_name"
-                                                    label="Name"
-                                                    name="customer_name"
-                                                    defaultValue="น้ำหนักรวมทั้งหมด - น้ำหนักแกลลอน"
+                                                    label="ชื่อ"
                                                     variant="filled"
                                                     value={customer_name}
                                                     InputProps={{
@@ -398,6 +419,37 @@ function DashboardContent() {
                                                     }}
                                                     fullWidth
                                                 />
+                                            </Grid>
+
+                                            <Grid item xs={12} sm={6} >
+
+                                                <FormControl
+                                                    fullWidth
+                                                    color="warning"
+                                                    focused>
+                                                    <InputLabel
+                                                        name="data_usersid"
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                        id="data_usersid"
+                                                    >แก้ชื่อ</InputLabel>
+                                                    <Select
+                                                        id="data_usersid"
+                                                        label="แก้ไขชื่อ"
+                                                        name="data_usersid"
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+
+                                                    >
+                                                        {db_customer.results?.map((results, index) => (
+
+                                                            <MenuItem value={results.customer_id}>{results.customer_name}</MenuItem>
+                                                        ))}
+
+                                                    </Select>
+                                                </FormControl>
                                             </Grid>
 
                                             <Grid item xs={12} sm={6} >
@@ -577,7 +629,7 @@ function DashboardContent() {
                                                     fullWidth
                                                     onChange={fncSum3}
                                                     aria-describedby="emailHelp" placeholder="น้ำหนักหักลบแกลลอน * กรอกเปอร์เซ็น / 100"
-                                                    
+
                                                 />
                                             </Grid>
 

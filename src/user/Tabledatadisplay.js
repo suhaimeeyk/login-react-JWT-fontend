@@ -159,7 +159,7 @@ export default function Users() {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {items.results?.map((results,index) => {
+                    {items.data?.map((results,index) => {
                         return (
                         <TableRow
                             key={results.data_id} 
