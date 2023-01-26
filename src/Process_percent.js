@@ -88,7 +88,9 @@ function DashboardContent() {
     const { data_id } = useParams();
 
     const [customer_name, setcustomer_name] = useState('');
-    const [data_pricetotal, setdata_pricetotal] = useState('');
+    const [data_pricetotal45, setdata_pricetotal45] = useState('');
+    const [data_pricetotal55, setdata_pricetotal55] = useState('');
+    const [data_pricetotalAll, setdata_pricetotalAll] = useState('');
     const [data_date, setdata_date] = useState('');
 
     useEffect(() => {
@@ -103,7 +105,9 @@ function DashboardContent() {
                 if (result['status'] === 'Ok') {
 
                     setcustomer_name(result['data']['customer_name'])
-                    setdata_pricetotal(result['data']['data_pricetotal'])
+                    setdata_pricetotal45(result['data']['data_pricetotal']*45/100)
+                    setdata_pricetotal55(result['data']['data_pricetotal']*55/100)
+                    setdata_pricetotalAll(result['data']['data_pricetotal'])
                     setdata_date(result['data']['data_date'])
                 }
             })
@@ -120,7 +124,7 @@ function DashboardContent() {
             data_id: data_id,
             data_shareprice: data.get('data_shareprice'),
             data_depositprice: data.get('data_depositprice'),
-            status_id: 1,
+            status_id: 3,
         }
       
         if ( (jsonData.data_shareprice && jsonData.data_depositprice && jsonData.status_id ) ==='') {
@@ -250,7 +254,7 @@ function DashboardContent() {
                                         {/* <LockOutlinedIcon /> */}
                                     </Avatar>
                                     <Typography component="h1" variant="h5">
-                                        เจ้าของสวนกรีดยางเอง
+                                    ลูกจ้าง%2
                                     </Typography>
 
                                     {/* <Typography component="h1" variant="h5">
@@ -279,14 +283,23 @@ function DashboardContent() {
                                                 />
                                             </Grid>
 
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    label="จำนวนเงินทั้งหมด"
+                                                    variant="filled"
+                                                    value={data_pricetotalAll}
+                                                    fullWidth
+                                                />
+                                            </Grid>
+
 
                                             <Grid item xs={12} >
                                                 <TextField
-                                                    label="เงินแบ่ง"
+                                                    label="ช่องแบ่งเอา"
                                                     id='data_shareprice'
                                                     name='data_shareprice'
-                                                    onChange={ (e) => setdata_pricetotal(e.target.value)}
-                                                    value={data_pricetotal}
+                                                    onChange={ (e) => setdata_pricetotal45(e.target.value)}
+                                                    value={data_pricetotal45}
                                                     type="number"
                                                     color="warning"
                                                     focused
@@ -298,11 +311,12 @@ function DashboardContent() {
                                                 <TextField
                                                     id="data_depositprice"
                                                     name="data_depositprice"
-                                                    label="เงินฝาก"
+                                                    label="ช่องฝากเอา"
                                                     color="warning"
+                                                    onChange={ (e) => setdata_pricetotal55(e.target.value)}
                                                     focused
                                                     fullWidth
-                                                    value={data_pricetotal} 
+                                                    value={data_pricetotal55}
                                                 />
                                             </Grid>
 

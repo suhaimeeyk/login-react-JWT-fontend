@@ -34,7 +34,12 @@ import Createdatadisplay from './Createdatadisplay'
 import UserCreatedatadisplay from './user/Createdatadisplay'
 import Editdb_data from './Editdb_data'
 import Process_owner from './Process_owner'
-
+import Process_divide from './Process_divide'
+import Process_percent from './Process_percent'
+import UserEditdb_data from './user/Editdb_data'
+import UserProcess_owner from './user/Process_owner'
+import UserProcess_divide from './user/Process_divide'
+import UserProcess_percent from './user/Process_percent'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -73,6 +78,12 @@ root.render(
         <Route path="/user/Createdatadisplay" element={<UserCreatedatadisplay />} />
         <Route path="/Editdb_data/:data_id" element={<Editdb_data />} />
         <Route path="/Process_owner/:data_id" element={<Process_owner />} />
+        <Route path="/Process_divide/:data_id" element={<Process_divide />} />
+        <Route path="/Process_percent/:data_id" element={<Process_percent />} />
+        <Route path="/user/Editdb_data/:data_id" element={<UserEditdb_data />} />
+        <Route path="/user/Process_owner/:data_id" element={<UserProcess_owner />} />
+        <Route path="/user/Process_divide/:data_id" element={<UserProcess_divide />} />
+        <Route path="/user/Process_percent/:data_id" element={<UserProcess_percent />} />
 
  
     </Routes>

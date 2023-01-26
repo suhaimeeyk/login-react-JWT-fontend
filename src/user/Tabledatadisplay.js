@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -13,6 +13,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Link from '@mui/material/Link';
+
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
  
 
 export default function Users() {
@@ -76,40 +80,50 @@ export default function Users() {
       }, [users_id])
 
 
-    const UserUpdate = pricerubbers_id =>{
-        window.location = '/user/EditUserdb_pricerubbers/' + pricerubbers_id
+      const UserUpdate = data_id => {
+        window.location = '/user/Editdb_data/' + data_id
+    }
+
+    const Process_owner = data_id => {
+        window.location = '/user/Process_owner/' + data_id
+    }
+    const Process_divide = data_id => {
+        window.location = '/user/Process_divide/' + data_id
+    }
+    const Process_percent = data_id => {
+        window.location = '/user/Process_percent/' + data_id
     }
 
  
-      const UserDelete = pricerubbers_id => {
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
+    const UserDelete = data_id => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
 
-            var raw = JSON.stringify({
-            "pricerubbers_id": pricerubbers_id
-            });
+        var raw = JSON.stringify({
+            "data_id": data_id
+        });
 
-            var requestOptions = {
+        var requestOptions = {
             method: 'DELETE',
             headers: myHeaders,
             body: raw,
             redirect: 'follow'
-            };
+        };
 
-            fetch("http://localhost:3333/db_pricerubbers_id", requestOptions)
+        fetch("http://localhost:3333/db_data_id", requestOptions)
             .then(response => response.json())
             .then((data) => {
                 console.log(data)
-                if (data.status === 'Ok' ) {
-                    window.location ='/user/Alldb_pricerubbers'
+                if (data.status === 'Ok') {
+                    window.location = '/user/datadisplay'
                     alert('ลบรายการเรียบร้อย')
-                }else{
+                } else {
                     console.log(data.status)
                     alert('เกิดข้อผิดพลาด!!')
                 }
             })
             .catch(error => console.log('error', error));
-      }
+    }
 
       
 
@@ -159,65 +173,88 @@ export default function Users() {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {items.data?.map((results,index) => {
-                        return (
-                        <TableRow
-                            key={results.data_id} 
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                    <TableCell component="th" scope="row" align="center">
-                                        {index + 1 }
-                                    </TableCell>
+                                {items.data?.map((results, index) => {
+                                    return (
+                                        <TableRow
+                                            key={results.data_id}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                        >
+                                            <TableCell component="th" scope="row" align="center">
+                                                {index + 1}
+                                            </TableCell>
 
-                                    <TableCell align="lift" >
-                                        { (new Date(results.data_date)).toLocaleTimeString('th-TH', {
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric',
-                                            weekday: 'long',
-                                            }) }
-                                    </TableCell>
+                                            <TableCell align="lift" >
+                                                {(new Date(results.data_date)).toLocaleTimeString('th-TH', {
+                                                    year: 'numeric',
+                                                    month: 'long',
+                                                    day: 'numeric',
+                                                    weekday: 'long',
+                                                })}
+                                            </TableCell>
 
-                                    <TableCell align="lift">{ results.customer_name}</TableCell>
-                                    <TableCell align="lift">{results.catwithdraw_name}</TableCell>
-                                    <TableCell align="lift">{results.data_totalgallon}</TableCell>
-                                    <TableCell align="lift">{results.data_wgallon}</TableCell>
-                                    <TableCell align="lift">{results.data_disgallon}</TableCell>
-                                    {/* <TableCell align="lift">{results.data_percent}</TableCell> */}
-                                    <TableCell align="lift">{results.data_dryrubber}</TableCell>
-                                    <TableCell align="lift">{results.data_price}</TableCell>
-                                    <TableCell align="lift">{results.data_pricetotal}</TableCell>
-                                    <TableCell align="lift">
-                                      {results.data_shareprice === 0 ? <p>ยังไม่ได้ทำรายการ</p>: null}
-                                      {results.data_shareprice !== 0 ? <p>{results.data_shareprice}</p>: null}
-                                    </TableCell>
-                                    <TableCell align="lift">
-                                      {results.data_depositprice === 0 ? <p>ยังไม่ได้ทำรายการ</p>: null}
-                                      {results.data_depositprice !== 0 ? <p>{results.data_depositprice}</p>: null}
-                                    </TableCell>
-                                    <TableCell align="lift">
-                                      {results.status_id === 0 ? <p>ยังไม่ได้ทำรายการ</p>: null}
-                                      {results.status_id === 1 ? <p>เบิกทั้งหมด</p>: null}
-                                      {results.status_id === 2 ? <p>คูณ 45</p>: null}
-                                      {results.status_id === 3 ? <p>%2</p>: null}
-                                    </TableCell>
+                                            <TableCell align="lift">{results.customer_name}</TableCell>
+                                            <TableCell align="lift">{results.catwithdraw_name}</TableCell>
+                                            <TableCell align="lift">{results.data_totalgallon}</TableCell>
+                                            <TableCell align="lift">{results.data_wgallon}</TableCell>
+                                            <TableCell align="lift">{results.data_disgallon}</TableCell>
+                                            {/* <TableCell align="lift">{results.data_percent}</TableCell> */}
+                                            <TableCell align="lift">{results.data_dryrubber}</TableCell>
+                                            <TableCell align="lift">{results.data_price}</TableCell>
+                                            <TableCell align="lift">{results.data_pricetotal}</TableCell>
+                                            <TableCell align="lift">
+                                                {results.data_shareprice === 0 ?
+                                                     <p><Button > ยังไม่ได้ทำรายการ </Button></p>
+                                                    : null}
+                                                {results.data_shareprice !== 0 ? <p>{results.data_shareprice}</p> : null}
+                                            </TableCell>
+                                            <TableCell align="lift">
+                                                {results.data_depositprice === 0 ?
+                                                    <Button  > ยังไม่ได้ทำรายการ </Button>
+                                                    : null}
+                                                {results.data_depositprice !== 0 ? <p>{results.data_depositprice}</p> : null}
+                                            </TableCell>
+                                            <TableCell align="lift">
+                                                {results.status_id === 0 ?
+                                                    <Button > ยังไม่ได้ทำรายการ </Button>
+                                                    : null}
+                                                {results.status_id === 1 ? <p>เบิกทั้งหมด</p> : null}
+                                                {results.status_id === 2 ? <p>คูณ 45</p> : null}
+                                                {results.status_id === 3 ? <p>%2</p> : null}
+                                            </TableCell>
 
-                                
-                                    <TableCell align="lift">
-                                        <ButtonGroup variant="outlined" aria-label="outlined button group">
-                                            <Button onClick={ () => UserUpdate(results.pricerubbers_id) } > Edit </Button>
-                                            <Button onClick={ () => UserDelete(results.pricerubbers_id) } > Delete </Button>
-                                        </ButtonGroup>
-                                    </TableCell>
-                        
-                        </TableRow>
-)})}
-                    {/* <ul>
-          {items.map(results => (
-            <li key={results.users_id}>{results.users_name}</li>
-          ))}
-        </ul> */}
-                    </TableBody>
+
+                                            <TableCell align="lift">
+
+
+                                                <PopupState variant="popover" popupId="demo-popup-menu">
+                                                    {(popupState) => (
+                                                        <React.Fragment>
+                                                            <Button variant="contained" {...bindTrigger(popupState)}>
+                                                                ทำรายการ
+                                                            </Button>
+                                                            <Menu {...bindMenu(popupState)}>
+                                                                <MenuItem onClick={popupState.close}>
+                                                                    <ButtonGroup variant="outlined" aria-label="outlined button group">
+                                                                        <Button onClick={() => UserUpdate(results.data_id)} > Edit </Button>
+                                                                        <Button onClick={() => UserDelete(results.data_id)} > Delete </Button>
+                                                                    </ButtonGroup>
+                                                                </MenuItem>
+                                                                <MenuItem onClick={() => Process_owner(results.data_id)}>เจ้าของส่วนกรีดยางเอง</MenuItem>
+                                                                <MenuItem onClick={() => Process_divide(results.data_id)}>ลูกจ้าง %2</MenuItem>
+                                                                <MenuItem onClick={() => Process_percent(results.data_id)}>45% - 55%</MenuItem>
+                                                            </Menu>
+                                                        </React.Fragment>
+                                                    )}
+                                                </PopupState>
+
+                                            </TableCell>
+
+
+                                        </TableRow>
+                                    )
+                                })}
+
+                            </TableBody>
                 </Table>
         </TableContainer>
         </Paper>

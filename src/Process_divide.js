@@ -89,6 +89,7 @@ function DashboardContent() {
 
     const [customer_name, setcustomer_name] = useState('');
     const [data_pricetotal, setdata_pricetotal] = useState('');
+    const [data_pricetotalAll, setdata_pricetotalAll] = useState('');
     const [data_date, setdata_date] = useState('');
 
     useEffect(() => {
@@ -103,7 +104,8 @@ function DashboardContent() {
                 if (result['status'] === 'Ok') {
 
                     setcustomer_name(result['data']['customer_name'])
-                    setdata_pricetotal(result['data']['data_pricetotal'])
+                    setdata_pricetotal(result['data']['data_pricetotal']/2)
+                    setdata_pricetotalAll(result['data']['data_pricetotal'])
                     setdata_date(result['data']['data_date'])
                 }
             })
@@ -120,7 +122,7 @@ function DashboardContent() {
             data_id: data_id,
             data_shareprice: data.get('data_shareprice'),
             data_depositprice: data.get('data_depositprice'),
-            status_id: 1,
+            status_id: 2,
         }
       
         if ( (jsonData.data_shareprice && jsonData.data_depositprice && jsonData.status_id ) ==='') {
@@ -250,7 +252,7 @@ function DashboardContent() {
                                         {/* <LockOutlinedIcon /> */}
                                     </Avatar>
                                     <Typography component="h1" variant="h5">
-                                        เจ้าของสวนกรีดยางเอง
+                                    เปอร์เซ็นต์ 45% กับ 50%
                                     </Typography>
 
                                     {/* <Typography component="h1" variant="h5">
@@ -275,6 +277,15 @@ function DashboardContent() {
                                                     label="ชื่อ"
                                                     variant="filled"
                                                     value={customer_name}
+                                                    fullWidth
+                                                />
+                                            </Grid>
+
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    label="จำนวนเงินทั้งหมด"
+                                                    variant="filled"
+                                                    value={data_pricetotalAll}
                                                     fullWidth
                                                 />
                                             </Grid>

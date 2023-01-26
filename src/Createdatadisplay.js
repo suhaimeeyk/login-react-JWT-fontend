@@ -19,7 +19,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-
+import { useParams } from 'react-router-dom';
 
 function fncSum() {
 
@@ -84,27 +84,63 @@ const theme = createTheme();
 
 export default function SignUp() {
 
-
-
-
-    const [items, setItems] = useState([]);
-
+    const [users_id,setusers_id] = useState('');
 
     useEffect(() => {
-        UserGet()
-    }, [])
+  
+      const token = localStorage.getItem('token')
+      fetch('http://localhost:3333/authen', {
+          method: 'POST', // or 'PUT'
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+              if(data.status === 'ok' ) {
+  
+                  setusers_id(data.decoded['users_id'])
+                //   console.log(data.decoded['users_name'])
+  
+              }else{
+                  alert('authen failed')
+                  localStorage.removeItem('token');
+                  window.location ='/login'
+                  // console.log('asdasdasd')
+  
+                  
+              }
+              
+          })
+  
+          
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+  
+  
+  }, [])
 
 
-    const UserGet = () => {
-        fetch("http://localhost:3333/db_customer")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setItems(result);
-                    // console.log(result)
-                }
-            )
-    }
+  const [items, setItems] = useState([]);
+        
+  useEffect(() => {
+    var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+
+
+    fetch("http://localhost:3333/db_dataSelect/"+users_id , requestOptions)
+    .then(res => res.json())
+    .then((result) => {
+        setItems(result);
+        console.log(result)
+      }
+    )
+  }, [users_id])
+
     // const [selectedOption,setSelectedOption] = useState(0);
 
     const [Users, setUsers] = useState([]);
@@ -242,9 +278,9 @@ export default function SignUp() {
                                         label="ชื่อลูกค้า"
                                         name="data_usersid"
                                     >
-                                        {items.results?.map((results, index) => (
+                                        {items.data?.map((data, index) => (
 
-                                            <MenuItem value={results.customer_id}>{results.customer_name}</MenuItem>
+                                            <MenuItem value={data.customer_id}>{data.customer_name}</MenuItem>
                                         ))}
 
                                     </Select>

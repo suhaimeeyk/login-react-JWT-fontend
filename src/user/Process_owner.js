@@ -24,7 +24,7 @@ import TextField from '@mui/material/TextField';
 // import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
-import Logo from "./img/LOGO.png";
+import Logo from "../img/LOGO.png";
 import { useParams } from 'react-router-dom';
 
 
@@ -139,7 +139,7 @@ function DashboardContent() {
             .then((data) => {
                 console.log(jsonData)
             if(data.status === 'Ok' ) {
-                window.location ='/datadisplay'
+                window.location ='/user/datadisplay'
                 alert('ทำรายการเรียบร้อย')
             }else{
                 alert('เกิดข้อผิดพลาด!! กรุณาเช็คข้อมูลข้อมูล')
@@ -317,7 +317,7 @@ function DashboardContent() {
                                         </Button>
                                         <Grid container justifyContent="flex-end">
                                             <Grid item>
-                                                <Link href="/datadisplay" variant="body2">
+                                                <Link href="/user/datadisplay" variant="body2">
                                                     BACK
                                                 </Link>
                                             </Grid>

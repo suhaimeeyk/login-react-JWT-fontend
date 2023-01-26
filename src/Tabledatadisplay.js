@@ -105,6 +105,12 @@ export default function Users() {
     const Process_owner = data_id => {
         window.location = '/Process_owner/' + data_id
     }
+    const Process_divide = data_id => {
+        window.location = '/Process_divide/' + data_id
+    }
+    const Process_percent = data_id => {
+        window.location = '/Process_percent/' + data_id
+    }
 
 
     const UserDelete = data_id => {
@@ -216,19 +222,19 @@ export default function Users() {
                                             <TableCell align="lift">{results.data_pricetotal}</TableCell>
                                             <TableCell align="lift">
                                                 {results.data_shareprice === 0 ?
-                                                    <Button onClick={() => UserUpdate(results.data_id)} > ยังไม่ได้ทำรายการ </Button>
+                                                     <p><Button > ยังไม่ได้ทำรายการ </Button></p>
                                                     : null}
                                                 {results.data_shareprice !== 0 ? <p>{results.data_shareprice}</p> : null}
                                             </TableCell>
                                             <TableCell align="lift">
                                                 {results.data_depositprice === 0 ?
-                                                    <Button onClick={() => UserUpdate(results.data_id)} > ยังไม่ได้ทำรายการ </Button>
+                                                    <Button  > ยังไม่ได้ทำรายการ </Button>
                                                     : null}
                                                 {results.data_depositprice !== 0 ? <p>{results.data_depositprice}</p> : null}
                                             </TableCell>
                                             <TableCell align="lift">
                                                 {results.status_id === 0 ?
-                                                    <Button onClick={() => UserUpdate(results.data_id)} > ยังไม่ได้ทำรายการ </Button>
+                                                    <Button > ยังไม่ได้ทำรายการ </Button>
                                                     : null}
                                                 {results.status_id === 1 ? <p>เบิกทั้งหมด</p> : null}
                                                 {results.status_id === 2 ? <p>คูณ 45</p> : null}
@@ -253,8 +259,8 @@ export default function Users() {
                                                                     </ButtonGroup>
                                                                 </MenuItem>
                                                                 <MenuItem onClick={() => Process_owner(results.data_id)}>เจ้าของส่วนกรีดยางเอง</MenuItem>
-                                                                <MenuItem onClick={() => UserUpdate(results.data_id)}>ลูกจ้าง %2</MenuItem>
-                                                                <MenuItem onClick={() => UserUpdate(results.data_id)}>*45 - *55</MenuItem>
+                                                                <MenuItem onClick={() => Process_divide(results.data_id)}>ลูกจ้าง %2</MenuItem>
+                                                                <MenuItem onClick={() => Process_percent(results.data_id)}>45% - 55%</MenuItem>
                                                             </Menu>
                                                         </React.Fragment>
                                                     )}

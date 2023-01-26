@@ -120,11 +120,7 @@ export default function Users() {
                         
                         </TableRow>
                     ))}
-                    {/* <ul>
-          {items.map(results => (
-            <li key={results.users_id}>{results.users_name}</li>
-          ))}
-        </ul> */}
+                    
                     </TableBody>
                 </Table>
         </TableContainer>
